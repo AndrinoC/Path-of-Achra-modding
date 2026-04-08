@@ -8,6 +8,8 @@
 
 This guide is for the current loader-based setup.
 
+For the full prestige schema reference, see `ModSchema.md`.
+
 ## Installing The Loader
 
 If the loader is not already installed:
@@ -137,59 +139,7 @@ mods/my_mod/
 }
 ```
 
-## Supported Unlock Types
-
-- `always`
-- `skill_sum`
-
-Example `skill_sum`:
-
-```json
-"unlock": {
-  "type": "skill_sum",
-  "skills": ["Murmillo", "RapidStrikes"],
-  "threshold": 20,
-  "label": "20 points between [color=#af8f50]Guard[/color] and [color=#af8f50]Pugilism[/color]"
-}
-```
-
-Use the game’s internal trait keys in `skills`.
-
-## Supported Triggers, Conditions, And Actions
-
-Triggers:
-
-- `on_attack`
-- `on_block`
-
-Conditions:
-
-- `mainhand_bare_fist`
-- `melee_range_1`
-
-Actions:
-
-- `extra_attack_same_target`
-- `counterattack_attacker`
-
-Example effects:
-
-```json
-[
-  {
-    "trigger": "on_attack",
-    "conditions": ["mainhand_bare_fist"],
-    "action": "extra_attack_same_target",
-    "count": 2
-  },
-  {
-    "trigger": "on_block",
-    "conditions": ["mainhand_bare_fist", "melee_range_1"],
-    "action": "counterattack_attacker",
-    "count": 1
-  }
-]
-```
+The full unlock, trigger, condition, action, metric, and reference system is documented in `ModSchema.md`.
 
 ## Icons
 

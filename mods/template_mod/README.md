@@ -6,6 +6,8 @@
 4. Add your icon to `icons/`.
 5. Replace `TemplatePrestige` everywhere with your own internal key.
 
+See `ModSchema.md` for the full unlock, trigger, condition, action, and reference format.
+
 Recommended icon path in `content.json`:
 
 `icons/YourPrestige.png`

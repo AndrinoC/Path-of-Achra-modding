@@ -16,10 +16,13 @@ These are the files changed in the tested setup:
 - `ToolPrestigeGiver.gd`
   - append external prestige entries
   - show external requirement labels
+  - evaluate richer external unlock rules
 - `RouterEvents_OnAttack.gd`
   - dispatch `on_attack` prestige triggers to the loader
 - `RouterEvents_OnBlock.gd`
   - dispatch `on_block` prestige triggers to the loader
+- additional event routers
+  - dispatch the broader external trigger set such as hit, damage, heal, move, dodge, death, buffs, level, teleport, pickup, invoke, learn, summon, and turn
 - `Scenes/First_Menu.gd`
   - add the title-screen `Mods` button and mod list panel
   - allow enable or disable toggling with restart-required messaging
@@ -48,25 +51,15 @@ The current setup reads mod state at startup, so changes made in the Mods panel 
 
 ## Current Supported Schema
 
-Unlock types:
+Current support includes:
 
-- `always`
-- `skill_sum`
-
-Triggers:
-
-- `on_attack`
-- `on_block`
-
-Conditions:
-
-- `mainhand_bare_fist`
-- `melee_range_1`
-
-Actions:
-
-- `extra_attack_same_target`
-- `counterattack_attacker`
+- merged prestige entries
+- merged lore entries
+- title-screen mod enable or disable toggling
+- richer unlock rules
+- broader event trigger coverage
+- generic condition rules
+- direct queue-action passthrough via the external schema
 
 ## Scope
 
@@ -78,4 +71,6 @@ This loader is intended to support lightweight prestige mods with:
 - simple built-in combat behaviors
 - title-screen mod enable or disable toggling
 
-If you want new trigger types, new conditions, or new action types, you will need to extend the base loader and rebuild the base pack.
+The current full schema is documented in `ModSchema.md`.
+
+If you want trigger types, conditions, or actions beyond that documented schema, you will need to extend the base loader and rebuild the base pack.

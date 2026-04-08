@@ -337,12 +337,178 @@ func unlock_is_met(prestige_def, traits):
 		return true
 	if unlock.empty():
 		return true
+	var metrics = compute_unlock_metrics(traits)
+	return evaluate_unlock_rule(unlock, traits, metrics)
 
-	match str(unlock.get("type", "always")):
+
+func compute_unlock_metrics(traits):
+	var metrics = {
+		"all_total": 0,
+		"body_total": 0,
+		"martial_total": 0,
+		"fire_total": 0,
+		"life_total": 0,
+		"lightning_total": 0,
+		"astral_total": 0,
+		"psychic_total": 0,
+		"poison_total": 0,
+		"death_total": 0,
+		"blood_total": 0,
+		"ice_total": 0,
+		"form_total": 0,
+		"ooze_total": 0,
+		"necro_total": 0,
+		"gallus_total": 0,
+		"starjumper_total": 0,
+		"strijela_total": 0,
+		"nochti_total": 0,
+		"lit_total": 0,
+		"master_total": 0,
+		"self_damage_total": 0,
+		"self_damage": 0,
+		"chant_total": 0,
+		"staff_count": 0,
+		"beast_total": 0,
+		"mindfight_total": 0,
+		"gorecleave_total": 0,
+		"elementalist_total": 0,
+		"player_level": 0,
+	}
+
+	if Global.Player == null:
+		return metrics
+
+	metrics.player_level = Global.Player.level
+
+	var items = []
+	for item in Global.Player.bag:
+		items.append(item)
+	var slots = [Global.Player.weapon_main, Global.Player.weapon_off, Global.Player.armor_head, Global.Player.armor_chest, Global.Player.armor_hands, Global.Player.armor_legs]
+	for slot in slots:
+		if slot != null:
+			items.append(slot)
+
+	for item in items:
+		if "staff" in textstrip.strip_bbcode(item.name).to_lower():
+			metrics.staff_count += 1
+
+	for key in traits:
+		var trait = traits[key]
+		if trait.generic == false:
+			var increase = trait.cost * trait.Level
+
+			if "self-damage" in textstrip.strip_bbcode(trait.Description).to_lower():
+				metrics.self_damage_total += increase
+				metrics.self_damage += increase
+
+			if "chant" in textstrip.strip_bbcode(trait.Name).to_lower():
+				metrics.chant_total += increase
+
+			if "kinesis" in textstrip.strip_bbcode(trait.Name).to_lower():
+				metrics.elementalist_total += increase
+
+			metrics.all_total += increase
+
+			match trait.Element:
+				"Body":
+					metrics.body_total += increase
+					metrics.martial_total += increase
+				"Fire":
+					metrics.fire_total += increase
+				"Lightning":
+					metrics.lightning_total += increase
+				"Poison":
+					metrics.poison_total += increase
+				"Life":
+					metrics.life_total += increase
+				"Death":
+					metrics.death_total += increase
+				"Astral":
+					metrics.astral_total += increase
+				"Ice":
+					metrics.ice_total += increase
+				"Blood":
+					metrics.blood_total += increase
+				"Psychic":
+					metrics.psychic_total += increase
+
+			match trait.title:
+				"Batform", "Snakeform", "Wormform", "Sparkform", "Geistform", "Vineform":
+					metrics.form_total += increase
+				"SummonRedDragon", "SummonGrika", "PoisonFamiliar":
+					metrics.beast_total += increase
+				"Oozemancy", "Slime", "BurningOoze":
+					metrics.ooze_total += increase
+				"Necromancy", "MavetKa", "HungryGrave", "ChannelDeath":
+					metrics.necro_total += increase
+				"Tenacity":
+					metrics.gallus_total += increase
+				"Aim":
+					metrics.strijela_total += increase
+				"Rampage":
+					metrics.nochti_total += increase
+				"GoreCleave":
+					metrics.gorecleave_total += increase
+				"MindKnight":
+					metrics.mindfight_total += increase
+				"Astrostoicism", "Astrohunting", "AstralSeeking", "Shimmergang":
+					metrics.starjumper_total += increase
+				"BlightCult", "MinionFeast", "GroveCult", "FlameCult", "FulminantCult", "StarCult":
+					metrics.lit_total += increase
+				"MasterEntangle", "MasterScorch", "Parafrost", "MasterDoom", "MasterBleed":
+					metrics.master_total += increase
+
+	return metrics
+
+
+func evaluate_unlock_rule(rule, traits, metrics):
+	if typeof(rule) != TYPE_DICTIONARY:
+		return false
+
+	match str(rule.get("type", "always")):
 		"always":
 			return true
+		"all":
+			for subrule in rule.get("requirements", []):
+				if evaluate_unlock_rule(subrule, traits, metrics) == false:
+					return false
+			return true
+		"any":
+			for subrule in rule.get("requirements", []):
+				if evaluate_unlock_rule(subrule, traits, metrics) == true:
+					return true
+			return false
+		"not":
+			return evaluate_unlock_rule(rule.get("requirement", {}), traits, metrics) == false
 		"skill_sum":
-			return skill_sum_is_met(unlock, traits)
+			return skill_sum_is_met(rule, traits)
+		"metric_gte":
+			return get_metric(metrics, str(rule.get("metric", ""))) >= float(rule.get("threshold", 0))
+		"metric_sum_gte":
+			var total = 0.0
+			for metric_name in rule.get("metrics", []):
+				total += get_metric(metrics, str(metric_name))
+			return total >= float(rule.get("threshold", 0))
+		"element_presence_all":
+			for element in rule.get("elements", []):
+				if Global.Player.ELEMENTS.has(str(element)) == false:
+					return false
+			return true
+		"element_presence_any":
+			for element in rule.get("elements", []):
+				if Global.Player.ELEMENTS.has(str(element)) == true:
+					return true
+			return false
+		"player_level_gte":
+			return Global.Player.level >= int(rule.get("level", 0))
+		"elements_empty":
+			return Global.Player.ELEMENTS.empty()
+		"land_is":
+			return StateWorld.land == str(rule.get("value", ""))
+		"item_match":
+			return item_match(rule)
+		"compare":
+			return compare_values(resolve_schema_value(rule.get("left", null), {"player": Global.Player}), str(rule.get("op", "eq")), resolve_schema_value(rule.get("right", null), {"player": Global.Player}))
 
 	return false
 
@@ -361,16 +527,49 @@ func skill_sum_is_met(unlock, traits):
 	return total >= int(unlock.get("threshold", 0))
 
 
+func get_metric(metrics, key):
+	if metrics.has(key):
+		return float(metrics[key])
+	return 0.0
+
+
+func item_match(rule):
+	var item = get_player_item_from_slot(str(rule.get("slot", "")))
+	if item == null:
+		return false
+
+	var property_name = str(rule.get("property", "title"))
+	var left = resolve_ref_segment(item, property_name)
+	var right = rule.get("value", null)
+	return compare_values(left, str(rule.get("op", "eq")), right)
+
+
+func get_player_item_from_slot(slot):
+	match slot:
+		"weapon_main":
+			return Global.Player.weapon_main
+		"weapon_off":
+			return Global.Player.weapon_off
+		"armor_head":
+			return Global.Player.armor_head
+		"armor_chest":
+			return Global.Player.armor_chest
+		"armor_hands":
+			return Global.Player.armor_hands
+		"armor_legs":
+			return Global.Player.armor_legs
+
+	return null
+
+
 func apply_prestige_trigger(trigger, context):
-	var trigger_unit = null
-	match trigger:
-		"on_attack":
-			trigger_unit = context.get("attacker", null)
-		"on_block":
-			trigger_unit = context.get("defender", null)
+	var trigger_unit = get_trigger_unit(trigger, context)
 
 	if trigger_unit == null:
 		return
+
+	context["trigger"] = trigger
+	context["trigger_unit"] = trigger_unit
 
 	var trigger_traits = trigger_unit.get_traits()
 	for prestige_def in prestige_defs:
@@ -389,70 +588,372 @@ func apply_prestige_trigger(trigger, context):
 			if conditions_are_met(effect.get("conditions", []), context, trigger_unit) == false:
 				continue
 
-			execute_effect(effect, context, trigger_traits[prestige_def.title].Name)
+			execute_effect_entry(effect, context, trigger_traits[prestige_def.title].Name)
+
+
+func get_trigger_unit(trigger, context):
+	match trigger:
+		"on_attack", "on_hit", "on_damage":
+			return context.get("attacker", null)
+		"on_heal":
+			return context.get("healer_unit", null)
+		"on_invoke", "on_learn":
+			return Global.Player
+		"on_summon":
+			return context.get("summoner", null)
+		"on_apply_bonus_source":
+			return context.get("origin", null)
+		"on_apply_buff_source":
+			var buff_source = context.get("buff", null)
+			if buff_source != null:
+				return buff_source.source
+		"on_block", "on_dodge", "on_shrug_off", "on_receive_damage":
+			return context.get("defender", null)
+		"on_receive_heal":
+			return context.get("healed_unit", null)
+		"on_apply_bonus_target":
+			return context.get("target", null)
+		"on_move", "on_wait", "on_turn", "on_level_up", "on_teleport", "on_enter_level", "on_spawned", "on_intervention", "on_remove_buff":
+			return context.get("unit", null)
+		"on_death":
+			return context.get("dying_unit", null)
+		"on_kill":
+			return context.get("killer", null)
+		"on_pickup":
+			return Global.Player
+		"on_apply_buff_target":
+			var buff_target = context.get("buff", null)
+			if buff_target != null:
+				return buff_target.target
+
+	return null
 
 
 func conditions_are_met(conditions, context, trigger_unit):
+	if typeof(conditions) == TYPE_NIL:
+		return true
+	if typeof(conditions) == TYPE_DICTIONARY:
+		return condition_is_met(conditions, context, trigger_unit)
 	if typeof(conditions) != TYPE_ARRAY:
 		return true
 
 	for condition in conditions:
-		if condition_is_met(str(condition), context, trigger_unit) == false:
+		if condition_is_met(condition, context, trigger_unit) == false:
 			return false
 
 	return true
 
 
 func condition_is_met(condition, context, trigger_unit):
-	match condition:
-		"mainhand_bare_fist":
-			if trigger_unit == null:
+	if typeof(condition) == TYPE_STRING:
+		match condition:
+			"mainhand_bare_fist":
+				if trigger_unit == null:
+					return false
+				return translate.is_bare_fist(trigger_unit.weapon_main)
+			"melee_range_1":
+				if context.has("attacker") == false or context.has("defender") == false:
+					return false
+				return calcrange.tile_is_in_range(context.attacker.residence, context.defender.residence, 1)
+		return false
+
+	if typeof(condition) != TYPE_DICTIONARY:
+		return false
+
+	match str(condition.get("type", "all")):
+		"all":
+			for subcondition in condition.get("conditions", []):
+				if condition_is_met(subcondition, context, trigger_unit) == false:
+					return false
+			return true
+		"any":
+			for subcondition in condition.get("conditions", []):
+				if condition_is_met(subcondition, context, trigger_unit) == true:
+					return true
+			return false
+		"not":
+			return condition_is_met(condition.get("condition", {}), context, trigger_unit) == false
+		"trait_has":
+			var trait_unit = get_condition_subject(condition, context, trigger_unit)
+			return trait_unit != null and trait_unit.get_traits().has(str(condition.get("trait", "")))
+		"trait_lacks":
+			var no_trait_unit = get_condition_subject(condition, context, trigger_unit)
+			return no_trait_unit != null and no_trait_unit.get_traits().has(str(condition.get("trait", ""))) == false
+		"buff_has":
+			var buff_unit = get_condition_subject(condition, context, trigger_unit)
+			return buff_unit != null and buff_unit.get_buff_names().has(str(condition.get("buff", "")))
+		"buff_lacks":
+			var no_buff_unit = get_condition_subject(condition, context, trigger_unit)
+			return no_buff_unit != null and no_buff_unit.get_buff_names().has(str(condition.get("buff", ""))) == false
+		"element_has":
+			var element_unit = get_condition_subject(condition, context, trigger_unit)
+			return element_unit == Global.Player and Global.Player.ELEMENTS.has(str(condition.get("element", "")))
+		"element_lacks":
+			var no_element_unit = get_condition_subject(condition, context, trigger_unit)
+			return no_element_unit == Global.Player and Global.Player.ELEMENTS.has(str(condition.get("element", ""))) == false
+		"weapon_bare_fist":
+			var weapon_unit = get_condition_subject(condition, context, trigger_unit)
+			if weapon_unit == null:
 				return false
-			return translate.is_bare_fist(trigger_unit.weapon_main)
-		"melee_range_1":
-			if context.has("attacker") == false or context.has("defender") == false:
+			var slot_name = str(condition.get("slot", "main"))
+			var weapon = weapon_unit.weapon_main
+			if slot_name == "off":
+				weapon = weapon_unit.weapon_off
+			return translate.is_bare_fist(weapon)
+		"melee_range":
+			var source = resolve_schema_value(condition.get("source", "@attacker"), context)
+			var target = resolve_schema_value(condition.get("target", "@defender"), context)
+			var distance = int(resolve_schema_value(condition.get("distance", 1), context))
+			if source == null or target == null:
 				return false
-			return calcrange.tile_is_in_range(context.attacker.residence, context.defender.residence, 1)
+			return calcrange.tile_is_in_range(source.residence, target.residence, distance)
+		"is_player":
+			return get_condition_subject(condition, context, trigger_unit) == Global.Player
+		"is_dead":
+			var dead_unit = get_condition_subject(condition, context, trigger_unit)
+			return dead_unit != null and dead_unit.is_dead() == bool(condition.get("value", true))
+		"object_type_is":
+			var object_unit = get_condition_subject(condition, context, trigger_unit)
+			return object_unit != null and object_unit.object_type == str(condition.get("value", ""))
+		"compare":
+			return compare_values(resolve_schema_value(condition.get("left", null), context), str(condition.get("op", "eq")), resolve_schema_value(condition.get("right", null), context))
 
 	return false
 
 
-func execute_effect(effect, context, msg):
+func get_condition_subject(condition, context, trigger_unit):
+	if condition.has("subject"):
+		return resolve_schema_value(condition.subject, context)
+	return trigger_unit
+
+
+func execute_effect_entry(effect, context, msg):
+	if effect.has("actions") and typeof(effect.actions) == TYPE_ARRAY:
+		for action_def in effect.actions:
+			execute_action(action_def, context, msg)
+	else:
+		execute_action(effect, context, msg)
+
+
+func execute_action(effect, context, msg):
+	if typeof(effect) != TYPE_DICTIONARY:
+		return
+
+	var local_context = context.duplicate(true)
+	var local_msg = msg
+	if effect.has("msg"):
+		local_msg = str(resolve_schema_value(effect.msg, local_context))
+	local_context["msg"] = local_msg
+
 	match str(effect.get("action", "")):
 		"extra_attack_same_target":
-			execute_extra_attack_same_target(effect, context, msg)
+			execute_extra_attack_same_target(effect, local_context, local_msg)
 		"counterattack_attacker":
-			execute_counterattack_attacker(effect, context, msg)
+			execute_counterattack_attacker(effect, local_context, local_msg)
+		"queue_effect":
+			queue_effect(effect, local_context, local_msg)
+		"queue_effects":
+			for queued in effect.get("effects", []):
+				queue_effect({"effect": queued}, local_context, local_msg)
+		"add_message":
+			ToolMessageCreator.add_message(str(resolve_schema_value(effect.get("color", "[color=#c0c0c0]"), local_context)), str(resolve_schema_value(effect.get("message", ""), local_context)))
+
+
+func queue_effect(effect, context, msg):
+	var effect_data = effect.get("effect", null)
+	if effect_data == null:
+		effect_data = effect
+	var queued = resolve_schema_value(effect_data, context)
+	if typeof(queued) != TYPE_DICTIONARY:
+		return
+	if queued.has("action"):
+		queued.erase("action")
+	if queued.has("msg") == false:
+		queued["msg"] = msg
+	ProcessQueue.add_effect(queued)
 
 
 func execute_extra_attack_same_target(effect, context, msg):
-	var attacker = context.get("attacker", null)
-	var defender = context.get("defender", null)
-	var weapon = context.get("weapon", null)
+	var attacker = resolve_schema_value(effect.get("attacker", "@attacker"), context)
+	var defender = resolve_schema_value(effect.get("defender", "@defender"), context)
+	var weapon = resolve_schema_value(effect.get("weapon", "@weapon"), context)
 	if attacker == null or defender == null or weapon == null:
 		return
 
-	var tile_start = context.get("tile_start", attacker.residence)
-	var tile_end = context.get("tile_end", defender.residence)
-	var tile_range = int(context.get("tile_range", attacker.get_range_attack(weapon)))
-	var count = int(effect.get("count", 1))
+	var tile_start = resolve_schema_value(effect.get("tile_start", "@tile_start"), context)
+	if tile_start == null:
+		tile_start = attacker.residence
+	var tile_end = resolve_schema_value(effect.get("tile_end", "@tile_end"), context)
+	if tile_end == null:
+		tile_end = defender.residence
+	var tile_range = int(resolve_schema_value(effect.get("tile_range", context.get("tile_range", attacker.get_range_attack(weapon))), context))
+	var count = int(resolve_schema_value(effect.get("count", 1), context))
 
 	for _n in count:
 		ToolMagicMaker.add_attack(attacker, tile_start, tile_end, tile_range, defender, weapon, msg)
 
 
 func execute_counterattack_attacker(effect, context, msg):
-	var attacker = context.get("attacker", null)
-	var defender = context.get("defender", null)
+	var attacker = resolve_schema_value(effect.get("attacker", "@attacker"), context)
+	var defender = resolve_schema_value(effect.get("defender", "@defender"), context)
 	if attacker == null or defender == null:
 		return
 
-	var weapon = defender.weapon_main
-	var tile_range = defender.get_range_attack(weapon)
-	var count = int(effect.get("count", 1))
+	var weapon = resolve_schema_value(effect.get("weapon", "@defender.weapon_main"), context)
+	if weapon == null:
+		weapon = defender.weapon_main
+	var tile_range = int(resolve_schema_value(effect.get("tile_range", defender.get_range_attack(weapon)), context))
+	var count = int(resolve_schema_value(effect.get("count", 1), context))
 
 	for _n in count:
 		ToolMagicMaker.add_attack(defender, defender.residence, attacker.residence, tile_range, attacker, weapon, msg)
+
+
+func resolve_schema_value(value, context):
+	var value_type = typeof(value)
+	if value_type == TYPE_STRING:
+		var string_value = str(value)
+		if string_value.begins_with("@"):
+			return resolve_ref_path(string_value.substr(1, string_value.length() - 1), context)
+		return value
+	if value_type == TYPE_ARRAY:
+		var out_array = []
+		for item in value:
+			out_array.append(resolve_schema_value(item, context))
+		return out_array
+	if value_type == TYPE_DICTIONARY:
+		if value.has("ref"):
+			return evaluate_ref_spec(value, context)
+		var out_dict = {}
+		for key in value:
+			out_dict[key] = resolve_schema_value(value[key], context)
+		return out_dict
+	return value
+
+
+func evaluate_ref_spec(spec, context):
+	var base = resolve_ref_path(str(spec.ref), context)
+	if is_numeric_value(base):
+		var number = float(base)
+		if spec.has("mult"):
+			number *= float(resolve_schema_value(spec.mult, context))
+		if spec.has("div"):
+			number /= float(resolve_schema_value(spec.div, context))
+		if spec.has("add"):
+			number += float(resolve_schema_value(spec.add, context))
+		if spec.has("sub"):
+			number -= float(resolve_schema_value(spec.sub, context))
+		if spec.has("min"):
+			var min_value = float(resolve_schema_value(spec.min, context))
+			if number < min_value:
+				number = min_value
+		if spec.has("max"):
+			var max_value = float(resolve_schema_value(spec.max, context))
+			if number > max_value:
+				number = max_value
+		match str(spec.get("round", "")):
+			"int":
+				return int(number)
+			"floor":
+				return floor(number)
+			"ceil":
+				return ceil(number)
+		return number
+	return base
+
+
+func resolve_ref_path(path, context):
+	var parts = str(path).split(".")
+	if parts.empty():
+		return null
+
+	var current = resolve_ref_root(parts[0], context)
+	for index in range(1, parts.size()):
+		current = resolve_ref_segment(current, parts[index])
+	return current
+
+
+func resolve_ref_root(root, context):
+	if typeof(context) == TYPE_DICTIONARY and context.has(root):
+		return context[root]
+
+	match root:
+		"player":
+			return Global.Player
+		"land":
+			return StateWorld.land
+
+	return null
+
+
+func resolve_ref_segment(current, segment):
+	if current == null:
+		return null
+	if typeof(current) == TYPE_DICTIONARY:
+		if current.has(segment):
+			return current[segment]
+		return null
+	if typeof(current) == TYPE_ARRAY:
+		var index = int(segment)
+		if index >= 0 and index < current.size():
+			return current[index]
+		return null
+
+	match segment:
+		"speed":
+			if current.has_method("get_SPEED"):
+				return current.get_SPEED()
+		"damage_total_mainhand":
+			if current.has_method("get_DMG_total"):
+				return current.get_DMG_total(current.weapon_main)
+		"damage_type_mainhand":
+			if current.has_method("get_DMG_type"):
+				return current.get_DMG_type(current.weapon_main)
+		"range_mainhand":
+			if current.has_method("get_range_attack"):
+				return current.get_range_attack(current.weapon_main)
+		"buff_names":
+			if current.has_method("get_buff_names"):
+				return current.get_buff_names()
+		"traits":
+			if current.has_method("get_traits"):
+				return current.get_traits()
+
+	return current.get(segment)
+
+
+func compare_values(left, op, right):
+	match op:
+		"eq":
+			return normalize_compare_value(left) == normalize_compare_value(right)
+		"neq":
+			return normalize_compare_value(left) != normalize_compare_value(right)
+		"gt":
+			return float(left) > float(right)
+		"gte":
+			return float(left) >= float(right)
+		"lt":
+			return float(left) < float(right)
+		"lte":
+			return float(left) <= float(right)
+		"contains":
+			return normalize_compare_value(left).find(normalize_compare_value(right)) != -1
+		"has":
+			if typeof(left) == TYPE_ARRAY or typeof(left) == TYPE_DICTIONARY:
+				return left.has(right)
+
+	return false
+
+
+func normalize_compare_value(value):
+	if typeof(value) == TYPE_STRING:
+		return textstrip.strip_bbcode(str(value)).to_lower()
+	return value
+
+
+func is_numeric_value(value):
+	var value_type = typeof(value)
+	return value_type == TYPE_INT or value_type == TYPE_REAL
 
 
 func load_texture(path):
