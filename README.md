@@ -122,7 +122,7 @@ Add a new prestige entry.
   "Name": "[color=#70ff60]My Prestige[/color]",
   "Level": 1,
   "Description": "On [color=#ff8030]attack[/color]: ...",
-  "Description_Unit": "Short unit version of the effect",
+  "Description_Unit": "Short alternate description",
   "Element": "None",
   "sprite": "res://Ham_Sprite/TraitIcons/MyPrestige.png",
   "base": 0,
@@ -146,7 +146,7 @@ Add a new prestige entry.
 - `Description`
   - the full in-game description
 - `Description_Unit`
-  - short unit version
+  - short alternate description used by the game
 - `sprite`
   - icon path inside the Godot project
 - `generic: true`
@@ -334,7 +334,7 @@ Set the JSON sprite path to:
 
 ### Recommended Icon Workflow
 
-1. create or generate the source image at high resolution
+1. create the source image at high resolution
 2. crop it tightly
 3. scale it down to `32x32`
 4. keep the silhouette readable
