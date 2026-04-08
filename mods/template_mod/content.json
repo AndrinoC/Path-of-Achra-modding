@@ -1,0 +1,40 @@
+{
+  "prestiges": {
+    "TemplatePrestige": {
+      "trait": {
+        "title": "TemplatePrestige",
+        "Name": "[color=#70ff60]Template Prestige[/color]",
+        "Level": 1,
+        "Description": "On [color=#ff8030]attack[/color]: do something.",
+        "Description_Unit": "Short alternate description.",
+        "Element": "None",
+        "sprite": "icons/TemplatePrestige.png",
+        "base": 0,
+        "cost": 1,
+        "infpen": false,
+        "generic": true,
+        "reference": "none",
+        "organize": "prestige",
+        "levelable": false
+      },
+      "lore": {
+        "title": "TemplatePrestige",
+        "text": "Replace this with your prestige lore."
+      },
+      "unlock": {
+        "type": "always",
+        "label": "[color=#70ff60]No requirement[/color] [color=#707070](test)[/color]"
+      },
+      "effects": [
+        {
+          "trigger": "on_attack",
+          "conditions": [
+            "mainhand_bare_fist"
+          ],
+          "action": "extra_attack_same_target",
+          "count": 1
+        }
+      ]
+    }
+  }
+}

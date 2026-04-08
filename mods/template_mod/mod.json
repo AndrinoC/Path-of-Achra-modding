@@ -1,0 +1,7 @@
+{
+  "id": "template_mod",
+  "name": "Template Mod",
+  "version": "1.0.0",
+  "author": "YourName",
+  "load_order": 100
+}
