@@ -1,11 +1,15 @@
 extends Node
 
+const CONFIG_FILE = "user://mods-config.json"
+
 
 var mods = []
+var mods_all = []
 var prestige_defs = []
 var prestige_by_title = {}
 var lore_entries = {}
 var icon_aliases = {}
+var mod_config = {}
 
 
 func _enter_tree():
@@ -13,7 +17,9 @@ func _enter_tree():
 
 
 func load_mods():
+	load_mod_config()
 	mods = []
+	mods_all = []
 	prestige_defs = []
 	prestige_by_title = {}
 	lore_entries = {}
@@ -37,12 +43,16 @@ func load_mods():
 			mod = load_pck_mod(entry_name, entry_path)
 
 		if mod != null:
-			mods.append(mod)
+			mods_all.append(mod)
+			if mod.enabled == true:
+				mod.loaded_now = true
+				mods.append(mod)
 
 		entry_name = dir.get_next()
 	dir.list_dir_end()
 
 	mods.sort_custom(self, "sort_mods")
+	mods_all.sort_custom(self, "sort_mods")
 	rebuild_indexes()
 
 
@@ -95,6 +105,8 @@ func load_mod_definition(folder_name, manifest_path, content_path, base_path, fi
 		"load_order": int(manifest.get("load_order", 100)),
 		"base_path": base_path,
 		"filesystem_root": filesystem_root,
+		"enabled": is_mod_enabled(str(manifest.get("id", folder_name))),
+		"loaded_now": false,
 		"content": content,
 	}
 
@@ -169,6 +181,90 @@ func set_prestige_definition(prestige_def):
 
 func sort_mods(a, b):
 	return int(a.load_order) < int(b.load_order)
+
+
+func load_mod_config():
+	mod_config = {
+		"enabled": {}
+	}
+
+	var file = File.new()
+	if file.file_exists(CONFIG_FILE) == false:
+		save_mod_config()
+		return
+
+	if file.open(CONFIG_FILE, File.READ) != OK:
+		return
+
+	var parsed = JSON.parse(file.get_as_text())
+	file.close()
+	if parsed.error != OK:
+		return
+	if typeof(parsed.result) != TYPE_DICTIONARY:
+		return
+
+	mod_config = parsed.result
+	if mod_config.has("enabled") == false:
+		mod_config["enabled"] = {}
+
+
+func save_mod_config():
+	var file = File.new()
+	if file.open(CONFIG_FILE, File.WRITE) != OK:
+		return
+	file.store_string(to_json(mod_config))
+	file.close()
+
+
+func is_mod_enabled(mod_id):
+	if mod_config.has("enabled") == false:
+		if mod_id == "template_mod":
+			return false
+		return true
+	if typeof(mod_config.enabled) != TYPE_DICTIONARY:
+		if mod_id == "template_mod":
+			return false
+		return true
+	if mod_config.enabled.has(mod_id) == false:
+		if mod_id == "template_mod":
+			return false
+		return true
+	return bool(mod_config.enabled[mod_id])
+
+
+func set_mod_enabled(mod_id, enabled):
+	if mod_config.has("enabled") == false or typeof(mod_config.enabled) != TYPE_DICTIONARY:
+		mod_config["enabled"] = {}
+
+	mod_config.enabled[mod_id] = enabled
+	save_mod_config()
+
+	for mod in mods_all:
+		if mod.id == mod_id:
+			mod.enabled = enabled
+			break
+
+
+func get_mod_info_list():
+	var list = []
+	for mod in mods_all:
+		list.append({
+			"id": mod.id,
+			"name": mod.name,
+			"version": mod.version,
+			"load_order": mod.load_order,
+			"enabled": mod.enabled,
+			"loaded_now": mod.loaded_now,
+			"folder_name": mod.folder_name,
+		})
+	return list
+
+
+func has_restart_pending():
+	for mod in mods_all:
+		if mod.enabled != mod.loaded_now:
+			return true
+	return false
 
 
 func load_json_file(path):

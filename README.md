@@ -26,6 +26,16 @@ Copy-Item '.\PathofAchra_ModLoader_quiet.pck' '.\PathofAchra.pck' -Force
 
 That enables external mods from the `mods/` folder.
 
+When the loader is installed, the title screen main menu will show a new `Mods` button above `Quit`.
+
+Use that menu to:
+
+- see detected mods
+- enable or disable mods
+- see when a restart is required
+
+Mod enable or disable state is saved in a separate user config and applies after restarting the game.
+
 ## Installing A Mod
 
 Drop a mod folder into:
@@ -46,6 +56,10 @@ mods/pitfighter/
 
 Start the game. The loader scans `mods/` automatically.
 
+You can then open the in-game `Mods` button to enable or disable the mod.
+
+Changes take effect after restarting the game.
+
 ## Creating A Mod
 
 Use the included template:
@@ -53,6 +67,8 @@ Use the included template:
 ```text
 mods/template_mod/
 ```
+
+The included template is disabled by default.
 
 Recommended workflow:
 

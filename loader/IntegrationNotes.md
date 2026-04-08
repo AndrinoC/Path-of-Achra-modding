@@ -10,7 +10,7 @@ These are the files changed in the tested setup:
 
 - `global.gd`
   - create the loader node at startup
-  - expose wrapper methods such as `merge_loaded_data()` and `load_mod_texture()`
+  - expose wrapper methods such as `merge_loaded_data()`, `load_mod_texture()`, and mod toggle helpers
 - `ToolLoaderJson.gd`
   - merge external prestige and lore data after loading JSON
 - `ToolPrestigeGiver.gd`
@@ -20,6 +20,9 @@ These are the files changed in the tested setup:
   - dispatch `on_attack` prestige triggers to the loader
 - `RouterEvents_OnBlock.gd`
   - dispatch `on_block` prestige triggers to the loader
+- `Scenes/First_Menu.gd`
+  - add the title-screen `Mods` button and mod list panel
+  - allow enable or disable toggling with restart-required messaging
 - UI files
   - use the loader texture fallback so external mod icons render correctly
 
@@ -32,6 +35,16 @@ Tested UI files:
 - `Scenes/UI_Inv.gd`
 - `Scenes/UI_Enemies.gd`
 - `Scenes/AbilityBook.gd`
+
+## Mod State Persistence
+
+The loader stores mod enabled or disabled state in:
+
+- `user://mods-config.json`
+
+This is separate from normal game settings.
+
+The current setup reads mod state at startup, so changes made in the Mods panel require a restart.
 
 ## Current Supported Schema
 
@@ -63,5 +76,6 @@ This loader is intended to support lightweight prestige mods with:
 - external lore
 - external icons
 - simple built-in combat behaviors
+- title-screen mod enable or disable toggling
 
 If you want new trigger types, new conditions, or new action types, you will need to extend the base loader and rebuild the base pack.
