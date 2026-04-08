@@ -1,0 +1,200 @@
+{
+  "skills": {
+    "ExampleBattleTrance": {
+      "title": "ExampleBattleTrance",
+      "Name": "[color=#af8f50]Battle Trance[/color]",
+      "Level": 1,
+      "Description": "On attack: deal bonus blunt damage to the target.",
+      "Element": "Body",
+      "sprite": "res://Ham_Sprite/TraitIcons/Guard.png",
+      "reference": "none",
+      "base": 5,
+      "cost": 2,
+      "generic": false,
+      "infpen": false,
+      "ready": true,
+      "resist_slash": 0,
+      "resist_pierce": 0,
+      "resist_blunt": 0,
+      "resist_fire": 0,
+      "resist_ice": 0,
+      "resist_poison": 0,
+      "resist_blood": 0,
+      "resist_death": 0,
+      "resist_astral": 0,
+      "resist_psychic": 0,
+      "resist_lightning": 0
+    }
+  },
+  "classes": {
+    "ExampleSentinel": {
+      "title": "ExampleSentinel",
+      "description": "A simple example class using a modded skill and modded equipment.",
+      "brief": "Example custom class",
+      "name": "[color=#af8f50]Sentinel[/color]",
+      "trait": "ExampleBattleTrance",
+      "sprite": "res://Ham_Sprite/TraitIcons/Guard.png",
+      "icon": "res://Ham_Sprite/TraitIcons/Guard.png",
+      "str": 2,
+      "dex": 1,
+      "wil": 1,
+      "life": 100,
+      "speed": 6,
+      "weapon_main": "ExamplePracticeBlade",
+      "weapon_off": "none",
+      "armor_head": "none",
+      "armor_hand": "none",
+      "armor_chest": "ExampleTravelCloak",
+      "armor_leg": "cloth_leg",
+      "locked": false,
+      "unlocked_by_default": true
+    }
+  },
+  "races": {
+    "ExampleAshkin": {
+      "title": "ExampleAshkin",
+      "description": "An example custom race using existing art references.",
+      "brief": "Example custom race",
+      "name": "[color=#d09050]Ashkin[/color]",
+      "trait": "Stran",
+      "sprite": "res://Ham_Sprite/Player/Straan.png",
+      "icon": "res://Ham_Sprite/Player/Straan_Icon.png",
+      "icon_small": "res://Ham_Sprite/Player/IcStraan.png",
+      "str": 1,
+      "dex": 1,
+      "wil": 1,
+      "life": 200,
+      "speed": 6,
+      "locked": false,
+      "unlocked_by_default": true,
+      "resist_slash": 0,
+      "resist_pierce": 0,
+      "resist_blunt": 0,
+      "resist_fire": 15,
+      "resist_ice": 0,
+      "resist_poison": 0,
+      "resist_blood": 0,
+      "resist_death": 0,
+      "resist_astral": 0,
+      "resist_psychic": 0,
+      "resist_lightning": 0
+    }
+  },
+  "gods": {
+    "ExampleWitness": {
+      "title": "ExampleWitness",
+      "name": "[color=#60b0ff]Witness[/color]",
+      "trait": "Ashem",
+      "brief": "Example custom god using existing invocations",
+      "description_start": "Prayers grant healing and astral damage",
+      "prayer": "O Witness, regard this example.",
+      "description": "An example custom god entry.",
+      "sprite": "res://Ham_Sprite/Gods/Ashem.png",
+      "icon": "res://Ham_Sprite/Gods/Ashem.png",
+      "invoke_1": "meditate",
+      "invoke_2": "awe",
+      "invoke_3": "vendi",
+      "str": 0,
+      "dex": 0,
+      "wil": 1,
+      "life": 0,
+      "speed": 0,
+      "locked": false,
+      "unlocked_by_default": true
+    }
+  },
+  "weapons": {
+    "ExamplePracticeBlade": {
+      "title": "ExamplePracticeBlade",
+      "class": "equipment",
+      "type": "weapon",
+      "position": "weapon",
+      "name": "[color=#af8f50]Practice Blade[/color]",
+      "sprite": "res://Ham_Sprite/Weapons/BladeApostle.png",
+      "icon": "res://Ham_Sprite/Weapons/Icons/Axe_Icon.png",
+      "description": "[color=#af8f50]Slash[/color]",
+      "rumor": "An example custom weapon.",
+      "proj_art": "none",
+      "use": "light",
+      "shield": false,
+      "size": 3,
+      "weight": 1,
+      "aoe": 1,
+      "range": 1,
+      "acc": 10,
+      "dmgtype": "slash",
+      "dmg": 12,
+      "def": 5,
+      "arm": 0,
+      "abilities": ["none", "none"],
+      "rarity": 0,
+      "resist_slash": 0,
+      "resist_pierce": 0,
+      "resist_blunt": 0,
+      "resist_fire": 0,
+      "resist_ice": 0,
+      "resist_poison": 0,
+      "resist_blood": 0,
+      "resist_death": 0,
+      "resist_astral": 0,
+      "resist_psychic": 0,
+      "resist_lightning": 0
+    }
+  },
+  "armor": {
+    "ExampleTravelCloak": {
+      "class": "equipment",
+      "type": "armor",
+      "title": "ExampleTravelCloak",
+      "name": "[color=#8080af]Travel Cloak[/color]",
+      "rumor": "An example custom chest item.",
+      "position": "chest",
+      "arm": 8,
+      "weight": 1,
+      "inflex": 0,
+      "sprite": "res://Ham_Sprite/Armor/Armor_Cloth_Chest.png",
+      "icon": "res://Ham_Sprite/Armor/icons/Icon_Cloth_Chest.png",
+      "abilities": ["none", "none"],
+      "rarity": 0,
+      "resist_slash": 0,
+      "resist_pierce": 0,
+      "resist_blunt": 0,
+      "resist_fire": 5,
+      "resist_ice": 0,
+      "resist_poison": 0,
+      "resist_blood": 0,
+      "resist_death": 0,
+      "resist_astral": 0,
+      "resist_psychic": 0,
+      "resist_lightning": 0
+    }
+  },
+  "trait_effects": {
+    "ExampleBattleTrance": {
+      "effects": [
+        {
+          "trigger": "on_attack",
+          "actions": [
+            {
+              "action": "queue_effect",
+              "effect": {
+                "name": "magic_damage_target",
+                "caster": "@attacker",
+                "target": "@defender",
+                "damage": 10,
+                "damage_type": "blunt",
+                "effect_sprite": "Blunt"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "lore": {
+    "ExampleBattleTrance": {
+      "title": "ExampleBattleTrance",
+      "text": "Example lore entry for a custom skill title."
+    }
+  }
+}

@@ -7,9 +7,28 @@ var mods = []
 var mods_all = []
 var prestige_defs = []
 var prestige_by_title = {}
+var trait_effect_defs = {}
 var lore_entries = {}
 var icon_aliases = {}
 var mod_config = {}
+var table_patches = {}
+var default_unlocked_keys = {}
+
+const TABLE_SECTION_MAP = {
+	"res://Data/Table_TraitsGeneric.json": "prestiges",
+	"res://Data/Table_Traits.json": "skills",
+	"res://Data/Table_Lore.json": "lore_entries",
+	"res://Data/Table_Classes.json": "classes",
+	"res://Data/Table_Races.json": "races",
+	"res://Data/Table_Gods.json": "gods",
+	"res://Data/Table_Weapons.json": "weapons",
+	"res://Data/Table_Armor.json": "armor",
+	"res://Data/Table_Invokes.json": "invokes",
+	"res://Data/Table_Buffs.json": "buffs",
+	"res://Data/Table_Allies.json": "allies",
+}
+
+const SPRITE_KEYS = ["sprite", "icon", "tile_sprite", "formsprite", "sprite_corpse", "world_icon"]
 
 
 func _enter_tree():
@@ -22,8 +41,11 @@ func load_mods():
 	mods_all = []
 	prestige_defs = []
 	prestige_by_title = {}
+	trait_effect_defs = {}
 	lore_entries = {}
 	icon_aliases = {}
+	table_patches = {}
+	default_unlocked_keys = {}
 
 	var mods_root = get_mods_root_path()
 	ensure_mods_folder(mods_root)
@@ -122,6 +144,7 @@ func load_mod_definition(folder_name, manifest_path, content_path, base_path, fi
 func rebuild_indexes():
 	prestige_defs = []
 	prestige_by_title = {}
+	trait_effect_defs = {}
 	lore_entries = {}
 
 	for mod in mods:
@@ -133,6 +156,13 @@ func rebuild_indexes():
 			var prestige_def = normalize_prestige_definition(mod, key, mod_prestiges[key])
 			if prestige_def != null:
 				set_prestige_definition(prestige_def)
+
+		var mod_trait_effects = mod.content.get("trait_effects", {})
+		if typeof(mod_trait_effects) == TYPE_DICTIONARY:
+			for key in mod_trait_effects:
+				set_trait_effect_definition(key, normalize_trait_effect_definition(mod_trait_effects[key]))
+
+	collect_table_patches()
 
 
 func normalize_prestige_definition(mod, title, definition):
@@ -171,6 +201,97 @@ func normalize_prestige_definition(mod, title, definition):
 	}
 
 
+func collect_table_patches():
+	table_patches = {}
+	default_unlocked_keys = {}
+	for table_path in TABLE_SECTION_MAP:
+		table_patches[table_path] = {}
+
+	for mod in mods:
+		for table_path in TABLE_SECTION_MAP:
+			var section_name = TABLE_SECTION_MAP[table_path]
+			var section_data = get_mod_content_section(mod, section_name)
+			if typeof(section_data) != TYPE_DICTIONARY:
+				continue
+
+			for key in section_data:
+				table_patches[table_path][key] = normalize_table_entry(mod, section_data[key], key)
+				if section_name == "classes" or section_name == "races" or section_name == "gods":
+					if entry_unlocked_by_default(section_data[key]):
+						default_unlocked_keys[key] = true
+
+
+func entry_unlocked_by_default(entry):
+	if typeof(entry) == TYPE_DICTIONARY and entry.has("unlocked_by_default"):
+		return bool(entry.unlocked_by_default)
+	return true
+
+
+func get_mod_content_section(mod, section_name):
+	if section_name == "prestiges":
+		var out = {}
+		var mod_prestiges = mod.content.get("prestiges", {})
+		if typeof(mod_prestiges) != TYPE_DICTIONARY:
+			return out
+		for key in mod_prestiges:
+			var definition = mod_prestiges[key]
+			if typeof(definition) == TYPE_DICTIONARY and definition.has("trait") and typeof(definition.trait) == TYPE_DICTIONARY:
+				out[key] = definition.trait
+		return out
+
+	if section_name == "lore_entries":
+		var lore_out = {}
+		var mod_prestige_lore = mod.content.get("prestiges", {})
+		if typeof(mod_prestige_lore) == TYPE_DICTIONARY:
+			for key in mod_prestige_lore:
+				var definition = mod_prestige_lore[key]
+				if typeof(definition) == TYPE_DICTIONARY and definition.has("lore") and typeof(definition.lore) == TYPE_DICTIONARY:
+					lore_out[key] = definition.lore
+		var explicit_lore = mod.content.get("lore", {})
+		if typeof(explicit_lore) == TYPE_DICTIONARY:
+			for key in explicit_lore:
+				lore_out[key] = explicit_lore[key]
+		return lore_out
+
+	return mod.content.get(section_name, {})
+
+
+func normalize_table_entry(mod, entry, default_key = ""):
+	if typeof(entry) != TYPE_DICTIONARY:
+		return entry
+	var out = entry.duplicate(true)
+	if default_key != "" and out.has("title") == false:
+		out["title"] = default_key
+	if out.has("unlocked_by_default"):
+		out.erase("unlocked_by_default")
+	adjust_entry_paths(mod, out)
+	return out
+
+
+func adjust_entry_paths(mod, entry):
+	for key in entry.keys():
+		var value = entry[key]
+		if typeof(value) == TYPE_DICTIONARY:
+			adjust_entry_paths(mod, value)
+		elif typeof(value) == TYPE_ARRAY:
+			for item in value:
+				if typeof(item) == TYPE_DICTIONARY:
+					adjust_entry_paths(mod, item)
+		elif key in SPRITE_KEYS and typeof(value) == TYPE_STRING:
+			entry[key] = normalize_mod_path(mod, str(value))
+
+
+func normalize_mod_path(mod, value):
+	var path = str(value)
+	if path.find("://") != -1:
+		return path
+	if path.begins_with("/"):
+		path = path.substr(1, path.length() - 1)
+	if str(mod.filesystem_root) != "":
+		icon_aliases[mod.base_path + "/" + path] = mod.filesystem_root.plus_file(path)
+	return mod.base_path + "/" + path
+
+
 func set_prestige_definition(prestige_def):
 	var title = prestige_def.title
 	for n in prestige_defs.size():
@@ -185,6 +306,30 @@ func set_prestige_definition(prestige_def):
 	prestige_by_title[title] = prestige_def
 	if typeof(prestige_def.lore) == TYPE_DICTIONARY:
 		lore_entries[title] = prestige_def.lore
+	if prestige_def.effects != null:
+		set_trait_effect_definition(title, {
+			"effects": prestige_def.effects,
+		})
+
+
+func normalize_trait_effect_definition(definition):
+	if typeof(definition) == TYPE_ARRAY:
+		return {
+			"effects": definition,
+		}
+	if typeof(definition) == TYPE_DICTIONARY:
+		if definition.has("effects"):
+			return definition
+		return {
+			"effects": [definition],
+		}
+	return {
+		"effects": [],
+	}
+
+
+func set_trait_effect_definition(title, definition):
+	trait_effect_defs[title] = definition
 
 
 func sort_mods(a, b):
@@ -269,6 +414,10 @@ func has_restart_pending():
 	return false
 
 
+func is_key_default_unlocked(key):
+	return default_unlocked_keys.has(key)
+
+
 func load_json_file(path):
 	var file = File.new()
 	if file.file_exists(path) == false:
@@ -288,13 +437,11 @@ func merge_loaded_data(path, loaded_data):
 	if typeof(loaded_data) != TYPE_DICTIONARY:
 		return loaded_data
 
-	match path.to_lower():
-		"res://data/table_traitsgeneric.json":
-			for prestige_def in prestige_defs:
-				loaded_data[prestige_def.title] = prestige_def.trait.duplicate(true)
-		"res://data/table_lore.json":
-			for title in lore_entries:
-				loaded_data[title] = lore_entries[title].duplicate(true)
+	for table_path in TABLE_SECTION_MAP:
+		if path.to_lower() == table_path.to_lower():
+			for key in table_patches[table_path]:
+				loaded_data[key] = cloner.clone_dict(table_patches[table_path][key])
+			break
 
 	return loaded_data
 
@@ -574,11 +721,11 @@ func apply_prestige_trigger(trigger, context):
 	context["trigger_unit"] = trigger_unit
 
 	var trigger_traits = trigger_unit.get_traits()
-	for prestige_def in prestige_defs:
-		if trigger_traits.has(prestige_def.title) == false:
+	for title in trait_effect_defs:
+		if trigger_traits.has(title) == false:
 			continue
 
-		var effects = prestige_def.get("effects", [])
+		var effects = trait_effect_defs[title].get("effects", [])
 		if typeof(effects) != TYPE_ARRAY:
 			continue
 
@@ -590,7 +737,7 @@ func apply_prestige_trigger(trigger, context):
 			if conditions_are_met(effect.get("conditions", []), context, trigger_unit) == false:
 				continue
 
-			execute_effect_entry(effect, context, trigger_traits[prestige_def.title].Name)
+			execute_effect_entry(effect, context, trigger_traits[title].Name)
 
 
 func get_trigger_unit(trigger, context):

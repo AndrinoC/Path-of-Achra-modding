@@ -77,6 +77,7 @@ Other disabled example mods are also included:
 - `mods/example_pitfighter/`
 - `mods/example_tempest_adept/`
 - `mods/example_wayfarer/`
+- `mods/example_content_pack/`
 
 Recommended workflow:
 

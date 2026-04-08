@@ -12,7 +12,7 @@ These are the files changed in the tested setup:
   - create the loader node at startup
   - expose wrapper methods such as `merge_loaded_data()`, `load_mod_texture()`, and mod toggle helpers
 - `ToolLoaderJson.gd`
-  - merge external prestige and lore data after loading JSON
+  - merge external prestige, skill, class, race, god, item, and lore data after loading JSON
 - `ToolPrestigeGiver.gd`
   - append external prestige entries
   - show external requirement labels
@@ -26,6 +26,11 @@ These are the files changed in the tested setup:
 - `Scenes/First_Menu.gd`
   - add the title-screen `Mods` button and mod list panel
   - allow enable or disable toggling with restart-required messaging
+- `Scenes/Start_Menu.gd`
+  - allow custom classes, races, and gods to appear in character creation
+  - resolve missing saved selections safely when a mod is disabled
+- `Button_StartMenu.gd`
+  - respect loader-provided default-unlocked content in the selection buttons
 - UI files
   - use the loader texture fallback so external mod icons render correctly
 
@@ -66,6 +71,9 @@ Current support includes:
 This loader is intended to support lightweight prestige mods with:
 
 - external prestige data
+- external skill data
+- external class, race, and god data
+- external weapon and armor data
 - external lore
 - external icons
 - simple built-in combat behaviors

@@ -36,6 +36,7 @@ This is useful for templates and example mods.
 
 ```json
 {
+  "skills": { ... },
   "prestiges": {
     "MyPrestige": {
       "trait": { ... },
@@ -43,9 +44,40 @@ This is useful for templates and example mods.
       "unlock": { ... },
       "effects": [ ... ]
     }
-  }
+  },
+  "classes": { ... },
+  "races": { ... },
+  "gods": { ... },
+  "weapons": { ... },
+  "armor": { ... },
+  "invokes": { ... },
+  "buffs": { ... },
+  "allies": { ... },
+  "trait_effects": { ... },
+  "lore": { ... }
 }
 ```
+
+## Supported Top-Level Sections
+
+- `prestiges`
+- `skills`
+- `classes`
+- `races`
+- `gods`
+- `weapons`
+- `armor`
+- `invokes`
+- `buffs`
+- `allies`
+- `trait_effects`
+- `lore`
+
+`prestiges` use the wrapped format with `trait`, `lore`, `unlock`, and `effects`.
+
+The other content tables use direct table entries.
+
+`trait_effects` lets custom non-prestige traits, such as modded skills, use the same trigger and action system as modded prestiges.
 
 ## Trait Section
 
