@@ -29,10 +29,23 @@
         {
           "trigger": "on_attack",
           "conditions": [
-            "mainhand_bare_fist"
+            {
+              "type": "weapon_bare_fist",
+              "subject": "@attacker",
+              "slot": "main"
+            }
           ],
-          "action": "extra_attack_same_target",
-          "count": 1
+          "actions": [
+            {
+              "action": "add_message",
+              "color": "[color=#c0c0c0]",
+              "message": "Template prestige triggered."
+            },
+            {
+              "action": "extra_attack_same_target",
+              "count": 1
+            }
+          ]
         }
       ]
     }

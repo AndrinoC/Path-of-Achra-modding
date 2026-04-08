@@ -72,6 +72,12 @@ mods/template_mod/
 
 The included template is disabled by default.
 
+Other disabled example mods are also included:
+
+- `mods/example_pitfighter/`
+- `mods/example_tempest_adept/`
+- `mods/example_wayfarer/`
+
 Recommended workflow:
 
 1. Copy `mods/template_mod/` to a new folder name.
@@ -99,9 +105,12 @@ mods/my_mod/
   "name": "My Mod",
   "version": "1.0.0",
   "author": "YourName",
+  "enabled_by_default": true,
   "load_order": 100
 }
 ```
+
+Set `enabled_by_default` to `false` if you want a template or example mod to stay off until the player enables it in the Mods menu.
 
 ## `content.json`
 

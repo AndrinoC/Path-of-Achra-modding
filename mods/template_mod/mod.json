@@ -3,5 +3,6 @@
   "name": "Template Mod",
   "version": "1.0.0",
   "author": "YourName",
+  "enabled_by_default": false,
   "load_order": 100
 }

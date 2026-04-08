@@ -1,0 +1,46 @@
+{
+  "prestiges": {
+    "ExamplePitFighter": {
+      "trait": {
+        "title": "ExamplePitFighter",
+        "Name": "[color=#af8f50]Example Pit-Fighter[/color]",
+        "Level": 1,
+        "Description": "On attack and on block with bare fists: perform extra attacks.",
+        "Description_Unit": "On attack / block with bare fists: perform extra attacks.",
+        "Element": "None",
+        "sprite": "res://Ham_Sprite/TraitIcons/Guard.png",
+        "base": 0,
+        "cost": 1,
+        "infpen": false,
+        "generic": true,
+        "reference": "none",
+        "organize": "prestige",
+        "levelable": false
+      },
+      "lore": {
+        "title": "ExamplePitFighter",
+        "text": "Example mod showing a skill-sum unlock and simple attack/block helper actions."
+      },
+      "unlock": {
+        "type": "skill_sum",
+        "skills": ["Murmillo", "RapidStrikes"],
+        "threshold": 20,
+        "label": "20 points between [color=#af8f50]Guard[/color] and [color=#af8f50]Pugilism[/color]"
+      },
+      "effects": [
+        {
+          "trigger": "on_attack",
+          "conditions": ["mainhand_bare_fist"],
+          "action": "extra_attack_same_target",
+          "count": 2
+        },
+        {
+          "trigger": "on_block",
+          "conditions": ["mainhand_bare_fist", "melee_range_1"],
+          "action": "counterattack_attacker",
+          "count": 1
+        }
+      ]
+    }
+  }
+}

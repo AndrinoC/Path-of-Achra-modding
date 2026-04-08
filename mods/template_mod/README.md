@@ -8,6 +8,10 @@
 
 See `ModSchema.md` for the full unlock, trigger, condition, action, and reference format.
 
+This template is disabled by default through `enabled_by_default: false`.
+
+Other example mods are available in the `mods/` folder if you want working samples.
+
 Recommended icon path in `content.json`:
 
 `icons/YourPrestige.png`

@@ -1,0 +1,64 @@
+{
+  "prestiges": {
+    "ExampleWayfarer": {
+      "trait": {
+        "title": "ExampleWayfarer",
+        "Name": "[color=#c0c0c0]Example Wayfarer[/color]",
+        "Level": 1,
+        "Description": "On entering a new level: heal yourself and display a message.",
+        "Description_Unit": "On entering a new level: heal yourself.",
+        "Element": "None",
+        "sprite": "res://Ham_Sprite/TraitIcons/Ogham.png",
+        "base": 0,
+        "cost": 1,
+        "infpen": false,
+        "generic": true,
+        "reference": "none",
+        "organize": "prestige",
+        "levelable": false
+      },
+      "lore": {
+        "title": "ExampleWayfarer",
+        "text": "Example mod showing a level, land, and no-elements unlock with an enter-level trigger."
+      },
+      "unlock": {
+        "type": "all",
+        "requirements": [
+          {
+            "type": "player_level_gte",
+            "level": 20
+          },
+          {
+            "type": "elements_empty"
+          },
+          {
+            "type": "land_is",
+            "value": "achra"
+          }
+        ],
+        "label": "Level 20, no elements, on Achra"
+      },
+      "effects": [
+        {
+          "trigger": "on_enter_level",
+          "actions": [
+            {
+              "action": "queue_effect",
+              "effect": {
+                "name": "heal",
+                "healer_unit": "@unit",
+                "healed_unit": "@unit",
+                "amount": 15
+              }
+            },
+            {
+              "action": "add_message",
+              "color": "[color=#c0c0c0]",
+              "message": "The Wayfarer breathes easier in the new lands."
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

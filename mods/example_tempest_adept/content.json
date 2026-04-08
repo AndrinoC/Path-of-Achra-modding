@@ -1,0 +1,77 @@
+{
+  "prestiges": {
+    "ExampleTempestAdept": {
+      "trait": {
+        "title": "ExampleTempestAdept",
+        "Name": "[color=#50c0ff]Example Tempest Adept[/color]",
+        "Level": 1,
+        "Description": "On hit: discharge lightning damage based on Speed.",
+        "Description_Unit": "On hit: deal bonus lightning damage.",
+        "Element": "None",
+        "sprite": "res://Ham_Sprite/TraitIcons/Stormbringer.png",
+        "base": 0,
+        "cost": 1,
+        "infpen": false,
+        "generic": true,
+        "reference": "none",
+        "organize": "prestige",
+        "levelable": false
+      },
+      "lore": {
+        "title": "ExampleTempestAdept",
+        "text": "Example mod showing a composite unlock, structured compare condition, and queue effect damage action."
+      },
+      "unlock": {
+        "type": "all",
+        "requirements": [
+          {
+            "type": "metric_sum_gte",
+            "metrics": ["lightning_total", "astral_total"],
+            "threshold": 25
+          },
+          {
+            "type": "element_presence_all",
+            "elements": ["Lightning", "Astral"]
+          }
+        ],
+        "label": "25 points between [color=#0060ff]Lightning[/color] and [color=#b080ff]Astral[/color]"
+      },
+      "effects": [
+        {
+          "trigger": "on_hit",
+          "conditions": [
+            {
+              "type": "compare",
+              "left": { "ref": "attacker.speed" },
+              "op": "gte",
+              "right": 5
+            }
+          ],
+          "actions": [
+            {
+              "action": "add_message",
+              "color": "[color=#80d0ff]",
+              "message": "Tempest Adept crackles with lightning."
+            },
+            {
+              "action": "queue_effect",
+              "effect": {
+                "name": "magic_damage_target",
+                "caster": "@attacker",
+                "target": "@defender",
+                "damage": {
+                  "ref": "attacker.speed",
+                  "mult": 5,
+                  "min": 10,
+                  "round": "int"
+                },
+                "damage_type": "lightning",
+                "effect_sprite": "Lightning"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

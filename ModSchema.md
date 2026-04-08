@@ -12,6 +12,26 @@ mods/my_mod/
     MyPrestige.png
 ```
 
+## `mod.json`
+
+```json
+{
+  "id": "my_mod",
+  "name": "My Mod",
+  "version": "1.0.0",
+  "author": "YourName",
+  "enabled_by_default": true,
+  "load_order": 100
+}
+```
+
+### `enabled_by_default`
+
+- `true`: the mod is active unless the player disables it
+- `false`: the mod starts disabled until the player enables it in the Mods menu
+
+This is useful for templates and example mods.
+
 ## `content.json` Shape
 
 ```json

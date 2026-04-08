@@ -97,15 +97,23 @@ func load_mod_definition(folder_name, manifest_path, content_path, base_path, fi
 	if typeof(content) != TYPE_DICTIONARY:
 		return null
 
+	var mod_id = str(manifest.get("id", folder_name))
+	var default_enabled = true
+	if manifest.has("enabled_by_default"):
+		default_enabled = bool(manifest.get("enabled_by_default", true))
+	elif mod_id == "template_mod":
+		default_enabled = false
+
 	return {
-		"id": str(manifest.get("id", folder_name)),
+		"id": mod_id,
 		"folder_name": folder_name,
 		"name": str(manifest.get("name", folder_name)),
 		"version": str(manifest.get("version", "0.0.0")),
 		"load_order": int(manifest.get("load_order", 100)),
 		"base_path": base_path,
 		"filesystem_root": filesystem_root,
-		"enabled": is_mod_enabled(str(manifest.get("id", folder_name))),
+		"default_enabled": default_enabled,
+		"enabled": is_mod_enabled(mod_id, default_enabled),
 		"loaded_now": false,
 		"content": content,
 	}
@@ -216,19 +224,13 @@ func save_mod_config():
 	file.close()
 
 
-func is_mod_enabled(mod_id):
+func is_mod_enabled(mod_id, default_enabled = true):
 	if mod_config.has("enabled") == false:
-		if mod_id == "template_mod":
-			return false
-		return true
+		return default_enabled
 	if typeof(mod_config.enabled) != TYPE_DICTIONARY:
-		if mod_id == "template_mod":
-			return false
-		return true
+		return default_enabled
 	if mod_config.enabled.has(mod_id) == false:
-		if mod_id == "template_mod":
-			return false
-		return true
+		return default_enabled
 	return bool(mod_config.enabled[mod_id])
 
 
