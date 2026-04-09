@@ -23,8 +23,10 @@ Copy-Item '.\PathofAchra.pck' '.\PathofAchra_original_backup.pck'
 2. Install the loader-enabled pack:
 
 ```powershell
-Copy-Item '.\PathofAchra_ModLoader_quiet.pck' '.\PathofAchra.pck' -Force
+Copy-Item 'C:\path\to\downloaded\PathofAchra.pck' '.\PathofAchra.pck' -Force
 ```
+
+Download `PathofAchra.pck` from the latest GitHub release, place it in the game folder, and replace the game's existing `PathofAchra.pck` with it.
 
 That enables external mods from the `mods/` folder.
 
@@ -49,11 +51,11 @@ mods/<mod_id>/
 Example:
 
 ```text
-mods/pitfighter/
+mods/example_pitfighter/
   mod.json
   content.json
   icons/
-    PitFighter.png
+  PitFighter.png
 ```
 
 Start the game. The loader scans `mods/` automatically.
