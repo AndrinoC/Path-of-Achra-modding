@@ -26,6 +26,7 @@ const TABLE_SECTION_MAP = {
 	"res://Data/Table_Invokes.json": "invokes",
 	"res://Data/Table_Buffs.json": "buffs",
 	"res://Data/Table_Allies.json": "allies",
+	"res://Data/Table_Enemies.json": "enemies",
 }
 
 const SPRITE_KEYS = ["sprite", "icon", "tile_sprite", "formsprite", "sprite_corpse", "world_icon"]
@@ -176,6 +177,8 @@ func refresh_runtime_item_tables():
 		LWep.reload_data()
 	if LArm != null:
 		LArm.reload_data()
+	if LEnemies != null:
+		LEnemies.reload_data()
 
 
 func normalize_prestige_definition(mod, title, definition):
