@@ -5,8 +5,8 @@
         "title": "ExampleWayfarer",
         "Name": "[color=#c0c0c0]Example Wayfarer[/color]",
         "Level": 1,
-        "Description": "On entering a new level: heal yourself and display a message.",
-        "Description_Unit": "On entering a new level: heal yourself.",
+        "Description": "On [color=#ffff50]entering a new level[/color]:\n\n     [color=#00ff80]heal 15[/color] to yourself",
+        "Description_Unit": "On entering a new level: heal 15 to yourself.",
         "Element": "None",
         "sprite": "res://Ham_Sprite/TraitIcons/Ogham.png",
         "base": 0,
@@ -19,7 +19,7 @@
       },
       "lore": {
         "title": "ExampleWayfarer",
-        "text": "Example mod showing a level, land, and no-elements unlock with an enter-level trigger."
+        "text": "An example prestige showing a quiet [color=#c0c0c0]no-elements[/color] unlock tied to [color=#ffff50]entering a new level[/color]."
       },
       "unlock": {
         "type": "all",
@@ -54,7 +54,7 @@
             {
               "action": "add_message",
               "color": "[color=#c0c0c0]",
-              "message": "The Wayfarer breathes easier in the new lands."
+              "message": "The Wayfarer [color=#00ff80]breathes easier[/color] in the new lands."
             }
           ]
         }

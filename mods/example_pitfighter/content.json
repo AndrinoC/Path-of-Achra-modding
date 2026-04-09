@@ -5,7 +5,7 @@
         "title": "ExamplePitFighter",
         "Name": "[color=#af8f50]Example Pit-Fighter[/color]",
         "Level": 1,
-        "Description": "On attack and on block with bare fists: perform extra attacks.",
+        "Description": "On [color=#ff8030]attack[/color], [color=#ff5050]if[/color] Main-hand is a [color=#ffff50]bare fist[/color]:\n\n     perform [color=#ffff50]2 extra attacks[/color] against the target\n\nOn [color=#ffff50]block[/color], [color=#ff5050]if[/color] Main-hand is a [color=#ffff50]bare fist[/color]:\n\n     perform [color=#ffff50]1 counterattack[/color] against the attacker",
         "Description_Unit": "On attack / block with bare fists: perform extra attacks.",
         "Element": "None",
         "sprite": "res://Ham_Sprite/TraitIcons/Guard.png",
@@ -19,7 +19,7 @@
       },
       "lore": {
         "title": "ExamplePitFighter",
-        "text": "Example mod showing a skill-sum unlock and simple attack/block helper actions."
+        "text": "An example prestige showing a straightforward [color=#af8f50]Guard[/color] and [color=#af8f50]Pugilism[/color] path."
       },
       "unlock": {
         "type": "skill_sum",

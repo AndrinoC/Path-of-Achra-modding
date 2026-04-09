@@ -5,8 +5,8 @@
         "title": "TemplatePrestige",
         "Name": "[color=#70ff60]Template Prestige[/color]",
         "Level": 1,
-        "Description": "On [color=#ff8030]attack[/color]: do something.",
-        "Description_Unit": "Short alternate description.",
+        "Description": "On [color=#ff8030]attack[/color], [color=#ff5050]if[/color] Main-hand is a [color=#ffff50]bare fist[/color]:\n\n     perform [color=#ffff50]1 extra attack[/color] against the target\n\n[color=#707070]Replace this text with your real effect once the template is working[/color]",
+        "Description_Unit": "On attack with a bare fist: perform 1 extra attack.",
         "Element": "None",
         "sprite": "icons/TemplatePrestige.png",
         "base": 0,
@@ -19,7 +19,7 @@
       },
       "lore": {
         "title": "TemplatePrestige",
-        "text": "Replace this with your prestige lore."
+        "text": "Replace this with your prestige lore after the template is visible and working in-game."
       },
       "unlock": {
         "type": "always",
@@ -39,7 +39,7 @@
             {
               "action": "add_message",
               "color": "[color=#c0c0c0]",
-              "message": "Template prestige triggered."
+              "message": "Template Prestige [color=#ff8030]triggers[/color]."
             },
             {
               "action": "extra_attack_same_target",

@@ -4,7 +4,7 @@
       "title": "ExampleBattleTrance",
       "Name": "[color=#af8f50]Battle Trance[/color]",
       "Level": 1,
-      "Description": "On attack: deal bonus blunt damage to the target.",
+      "Description": "On [color=#ff8030]attack[/color]:\n\n     deal [color=#d0a060]10 Blunt damage[/color] to the target",
       "Element": "Body",
       "sprite": "res://Ham_Sprite/TraitIcons/Guard.png",
       "reference": "none",
@@ -29,8 +29,8 @@
   "classes": {
     "ExampleSentinel": {
       "title": "ExampleSentinel",
-      "description": "A simple example class using a modded skill and modded equipment.",
-      "brief": "Example custom class",
+      "description": "A disciplined example class using [color=#af8f50]Battle Trance[/color], a [color=#af8f50]Practice Blade[/color], and a [color=#8080af]Travel Cloak[/color].",
+      "brief": "Example custom class with modded gear",
       "name": "[color=#af8f50]Sentinel[/color]",
       "trait": "ExampleBattleTrance",
       "sprite": "res://Ham_Sprite/TraitIcons/Guard.png",
@@ -53,8 +53,8 @@
   "races": {
     "ExampleAshkin": {
       "title": "ExampleAshkin",
-      "description": "An example custom race using existing art references.",
-      "brief": "Example custom race",
+      "description": "An example custom race with [color=#ff8030]+15 Fire Resist[/color].",
+      "brief": "Example custom race with resistances",
       "name": "[color=#d09050]Ashkin[/color]",
       "trait": "Stran",
       "sprite": "res://Ham_Sprite/Player/Straan.png",
@@ -86,11 +86,11 @@
       "name": "[color=#60b0ff]Witness[/color]",
       "trait": "Ashem",
       "brief": "Example custom god using existing invocations",
-      "description_start": "Prayers grant healing and astral damage",
+      "description_start": "Prayers grant [color=#00ff80]healing[/color] and [color=#b080ff]Astral damage[/color]",
       "prayer": "O Witness, regard this example.",
-      "description": "An example custom god entry.",
-      "sprite": "res://Ham_Sprite/Gods/Ashem.png",
-      "icon": "res://Ham_Sprite/Gods/Ashem.png",
+      "description": "An example custom god entry using existing invocation titles and art.",
+      "sprite": "res://Ham_Sprite/Gods/God_DisciplineSacrifice.png",
+      "icon": "res://Ham_Sprite/Gods/God_DisciplineSacrifice.png",
       "invoke_1": "meditate",
       "invoke_2": "awe",
       "invoke_3": "vendi",
@@ -113,7 +113,7 @@
       "sprite": "res://Ham_Sprite/Weapons/BladeApostle.png",
       "icon": "res://Ham_Sprite/Weapons/Icons/Axe_Icon.png",
       "description": "[color=#af8f50]Slash[/color]",
-      "rumor": "An example custom weapon.",
+      "rumor": "An example custom weapon dealing [color=#af8f50]Slash[/color] damage.",
       "proj_art": "none",
       "use": "light",
       "shield": false,
@@ -147,7 +147,7 @@
       "type": "armor",
       "title": "ExampleTravelCloak",
       "name": "[color=#8080af]Travel Cloak[/color]",
-      "rumor": "An example custom chest item.",
+      "rumor": "An example custom chest item with [color=#ff8030]+5 Fire Resist[/color].",
       "position": "chest",
       "arm": 8,
       "weight": 1,
@@ -185,6 +185,11 @@
                 "damage_type": "blunt",
                 "effect_sprite": "Blunt"
               }
+            },
+            {
+              "action": "add_message",
+              "color": "[color=#af8f50]",
+              "message": "Battle Trance deals [color=#d0a060]10 Blunt damage[/color]."
             }
           ]
         }

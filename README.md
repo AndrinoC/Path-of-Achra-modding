@@ -79,6 +79,12 @@ Other disabled example mods are also included:
 - `mods/example_wayfarer/`
 - `mods/example_content_pack/`
 
+The examples are meant to read like game content:
+
+- colored trigger and element keywords
+- explicit values in descriptions when the effect uses fixed numbers
+- short lore text instead of placeholder developer text
+
 Recommended workflow:
 
 1. Copy `mods/template_mod/` to a new folder name.

@@ -5,8 +5,8 @@
         "title": "ExampleTempestAdept",
         "Name": "[color=#50c0ff]Example Tempest Adept[/color]",
         "Level": 1,
-        "Description": "On hit: discharge lightning damage based on Speed.",
-        "Description_Unit": "On hit: deal bonus lightning damage.",
+        "Description": "On [color=#ff8030]hit[/color]:\n\n     deal [color=#0060ff]Lightning[/color] damage equal to [color=#20ff20]Speed x5[/color]\n\n[color=#707070]Minimum damage: 10[/color]",
+        "Description_Unit": "On hit: deal Lightning damage equal to Speed x5.",
         "Element": "None",
         "sprite": "res://Ham_Sprite/TraitIcons/Stormbringer.png",
         "base": 0,
@@ -19,7 +19,7 @@
       },
       "lore": {
         "title": "ExampleTempestAdept",
-        "text": "Example mod showing a composite unlock, structured compare condition, and queue effect damage action."
+        "text": "An example prestige showing a mixed [color=#0060ff]Lightning[/color] and [color=#b080ff]Astral[/color] requirement with queued damage effects."
       },
       "unlock": {
         "type": "all",
@@ -51,7 +51,7 @@
             {
               "action": "add_message",
               "color": "[color=#80d0ff]",
-              "message": "Tempest Adept crackles with lightning."
+              "message": "Tempest Adept [color=#0060ff]crackles with lightning[/color]."
             },
             {
               "action": "queue_effect",
