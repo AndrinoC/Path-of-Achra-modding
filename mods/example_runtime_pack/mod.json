@@ -1,0 +1,8 @@
+{
+  "id": "example_runtime_pack",
+  "name": "Example Runtime Pack",
+  "version": "1.0.0",
+  "author": "Andrinodino",
+  "enabled_by_default": false,
+  "load_order": 100
+}

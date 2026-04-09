@@ -1,0 +1,208 @@
+{
+  "skills": {
+    "TemplatePrayerBond": {
+      "title": "TemplatePrayerBond",
+      "Name": "[color=#60b0ff]Template Prayer Bond[/color]",
+      "Level": 1,
+      "Description": "On [color=#78bca4]prayer[/color]:\n\n     apply [color=#60b0ff]Template Ward[/color] to yourself\n     summon a [color=#60d0ff]Template Servitor[/color]\n     [color=#50ff50]heal[/color] yourself\n\n[color=#a0a0a0]Ward duration = 3 * skill level\nHeal = 10 * skill level[/color]",
+      "Element": "Astral",
+      "sprite": "res://Ham_Sprite/TraitIcons/Ogham.png",
+      "reference": "TemplateWard",
+      "base": 5,
+      "cost": 2,
+      "generic": false,
+      "infpen": false,
+      "ready": true,
+      "resist_slash": 0,
+      "resist_pierce": 0,
+      "resist_blunt": 0,
+      "resist_fire": 0,
+      "resist_ice": 0,
+      "resist_poison": 0,
+      "resist_blood": 0,
+      "resist_death": 0,
+      "resist_astral": 0,
+      "resist_psychic": 0,
+      "resist_lightning": 0
+    }
+  },
+  "gods": {
+    "TemplatePatron": {
+      "title": "TemplatePatron",
+      "name": "[color=#60b0ff]Template Patron[/color]",
+      "trait": "TemplatePrayerBond",
+      "brief": "Template god for custom invoke, buff, and summon testing",
+      "description_start": "Prayer applies a custom [color=#60b0ff]buff[/color], calls a custom [color=#60d0ff]ally[/color], and can trigger any extra effect you wire in.",
+      "prayer": "Replace this prayer with your own god text.",
+      "description": "Use this template when you want one mod to expose a custom invoke, a custom buff, and a custom ally or summon together.",
+      "sprite": "res://Ham_Sprite/Gods/God_DisciplineSacrifice.png",
+      "icon": "res://Ham_Sprite/Gods/God_DisciplineSacrifice.png",
+      "invoke_1": "TemplateCall",
+      "invoke_2": "meditate",
+      "invoke_3": "awe",
+      "str": 0,
+      "dex": 0,
+      "wil": 1,
+      "life": 0,
+      "speed": 0,
+      "locked": false,
+      "unlocked_by_default": true
+    }
+  },
+  "invokes": {
+    "TemplateCall": {
+      "title": "TemplateCall",
+      "name": "[color=#60b0ff]Template Call[/color]",
+      "description": "Apply [color=#60b0ff]Template Ward[/color] to yourself\n\nSummon a [color=#60d0ff]Template Servitor[/color]\n\n[color=#50ff50]Heal 10[/color] to yourself\n\nReplace these numbers, names, and colors after the template is working in-game.",
+      "description_short": "Apply a custom buff, summon a custom ally, and trigger your own extra effect.",
+      "reference": "none",
+      "use_max": 3,
+      "use_starting": 1,
+      "sprite": "Ashem",
+      "level_required": 1,
+      "use": 1,
+      "use_recharge_type": "new area",
+      "use_gain": 1,
+      "hotkey": 1,
+      "infpen": false,
+      "recharge_message": "[color=#60b0ff]The template call returns.[/color]",
+      "use_lose": "none"
+    }
+  },
+  "buffs": {
+    "TemplateWard": {
+      "title": "TemplateWard",
+      "name": "Template Ward",
+      "description": "Replace this with the text for your own custom buff.",
+      "color": "[color=#60b0ff]",
+      "message": "Template ward applied.",
+      "element": "astral",
+      "icon": "res://Ham_Sprite/Buffs/Grace.png",
+      "animation": "Grace",
+      "duration": 3,
+      "unique": true,
+      "form": false,
+      "formsprite": "none",
+      "harmful": false
+    }
+  },
+  "allies": {
+    "TemplateServitor": {
+      "title": "TemplateServitor",
+      "object_type": "ally",
+      "tags": [
+        "none",
+        "none"
+      ],
+      "family": "spirit",
+      "name": "Template Servitor",
+      "name_color": "[color=#60d0ff]Template Servitor[/color]",
+      "description": "Replace this with your own summon lore.",
+      "quant": [
+        1,
+        1
+      ],
+      "size": 5,
+      "lvl": 5,
+      "hp": 40,
+      "speed": 8,
+      "speedmin": 1,
+      "arm": 5,
+      "dodge": [
+        5,
+        10
+      ],
+      "deflect": [
+        1,
+        5,
+        10
+      ],
+      "accuracy": [
+        10,
+        10
+      ],
+      "damage": [
+        6,
+        10
+      ],
+      "dmgtype": "astral",
+      "range_attack": 4,
+      "proj_art": "res://Ham_Sprite/Proj/Proj_Astral.png",
+      "sprite": "res://Ham_Sprite/Allies/PhantasmNew.png",
+      "abilities": [
+        "Familiar"
+      ],
+      "taunt": "\"Awaiting your command.\"",
+      "sprite_corpse": "CorpsePurp",
+      "resist_slash": 0,
+      "resist_pierce": 0,
+      "resist_blunt": 0,
+      "resist_fire": 0,
+      "resist_ice": 0,
+      "resist_poison": 0,
+      "resist_blood": 0,
+      "resist_death": 0,
+      "resist_astral": 50,
+      "resist_psychic": 0,
+      "resist_lightning": 0
+    }
+  },
+  "trait_effects": {
+    "TemplatePrayerBond": {
+      "effects": [
+        {
+          "trigger": "on_invoke",
+          "actions": [
+            {
+              "action": "queue_effects",
+              "effects": [
+                {
+                  "name": "add_buff",
+                  "buff": {
+                    "ref": "buffs.TemplateWard",
+                    "target": "@unit",
+                    "source": "@unit",
+                    "duration": {
+                      "ref": "trait.Level",
+                      "mult": 3,
+                      "round": "int"
+                    }
+                  }
+                },
+                {
+                  "name": "summon_random",
+                  "alliance": "ally",
+                  "type": {
+                    "ref": "allies.TemplateServitor"
+                  },
+                  "summoner": "@unit"
+                },
+                {
+                  "name": "heal",
+                  "healer_unit": "@unit",
+                  "healed_unit": "@unit",
+                  "amount": {
+                    "ref": "trait.Level",
+                    "mult": 10,
+                    "round": "int"
+                  }
+                }
+              ]
+            },
+            {
+              "action": "add_message",
+              "color": "[color=#60b0ff]",
+              "message": "Template Prayer Bond triggers. Replace this with your own message once the pack is working."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "lore": {
+    "TemplatePrayerBond": {
+      "title": "TemplatePrayerBond",
+      "text": "Replace this lore with your own text after you confirm the invoke, buff, and summon all appear and work in-game."
+    }
+  }
+}

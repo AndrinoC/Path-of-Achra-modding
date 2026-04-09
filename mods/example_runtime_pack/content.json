@@ -1,0 +1,217 @@
+{
+  "skills": {
+    "ExampleLanternBond": {
+      "title": "ExampleLanternBond",
+      "Name": "[color=#60b0ff]Lantern Bond[/color]",
+      "Level": 1,
+      "Description": "On [color=#78bca4]using[/color] [color=#60b0ff]Lantern Vigil[/color]:\n\n     apply [color=#60b0ff]Ashen Ward[/color] to yourself\n     summon a [color=#60d0ff]Lantern Wisp[/color]\n     deal [color=#8030af]Astral damage[/color] to the closest enemy\n\n[color=#a0a0a0]Ward duration = 4 * skill level\nDamage = 10 * skill level[/color]",
+      "Element": "Astral",
+      "sprite": "res://Ham_Sprite/TraitIcons/Ogham.png",
+      "reference": "ExampleAshenWard",
+      "base": 5,
+      "cost": 2,
+      "generic": false,
+      "infpen": false,
+      "ready": true,
+      "resist_slash": 0,
+      "resist_pierce": 0,
+      "resist_blunt": 0,
+      "resist_fire": 0,
+      "resist_ice": 0,
+      "resist_poison": 0,
+      "resist_blood": 0,
+      "resist_death": 0,
+      "resist_astral": 0,
+      "resist_psychic": 0,
+      "resist_lightning": 0
+    }
+  },
+  "gods": {
+    "ExampleLanternSaint": {
+      "title": "ExampleLanternSaint",
+      "name": "[color=#60b0ff]Lantern Saint[/color]",
+      "trait": "ExampleLanternBond",
+      "brief": "Example custom god using a modded invoke, buff, and summon",
+      "description_start": "Prayer kindles a [color=#60b0ff]ward[/color], calls a [color=#60d0ff]wisp[/color], and lashes the nearest foe with [color=#8030af]Astral[/color] fire.",
+      "prayer": "O Lantern Saint, keep the ash-lamp lit.",
+      "description": "An example god entry wired to a custom invoke that applies a custom buff and summons a custom ally.",
+      "sprite": "res://Ham_Sprite/Gods/God_DisciplineSacrifice.png",
+      "icon": "res://Ham_Sprite/Gods/God_DisciplineSacrifice.png",
+      "invoke_1": "ExampleLanternVigil",
+      "invoke_2": "meditate",
+      "invoke_3": "awe",
+      "str": 0,
+      "dex": 0,
+      "wil": 1,
+      "life": 0,
+      "speed": 0,
+      "locked": false,
+      "unlocked_by_default": true
+    }
+  },
+  "invokes": {
+    "ExampleLanternVigil": {
+      "title": "ExampleLanternVigil",
+      "name": "[color=#60b0ff]Lantern Vigil[/color]",
+      "description": "Apply [color=#60b0ff]Ashen Ward[/color] to yourself\n\nSummon a [color=#60d0ff]Lantern Wisp[/color]\n\nDeal [color=#8030af]10 Astral damage[/color] to the closest enemy\n\n[color=#78bca4]+1 charge[/color] when you [color=#ffff50]enter[/color] a new area",
+      "description_short": "Apply [color=#60b0ff]Ashen Ward[/color], summon a [color=#60d0ff]Lantern Wisp[/color], and deal [color=#8030af]10 Astral damage[/color] to the closest enemy",
+      "reference": "none",
+      "use_max": 3,
+      "use_starting": 1,
+      "sprite": "Ashem",
+      "level_required": 1,
+      "use": 1,
+      "use_recharge_type": "new area",
+      "use_gain": 1,
+      "hotkey": 1,
+      "infpen": false,
+      "recharge_message": "[color=#60b0ff]The lantern steadies.[/color]",
+      "use_lose": "none"
+    }
+  },
+  "buffs": {
+    "ExampleAshenWard": {
+      "title": "ExampleAshenWard",
+      "name": "Ashen Ward",
+      "description": "A pale ring of ash-light circles the bearer.",
+      "color": "[color=#60b0ff]",
+      "message": "Ash-light gathers.",
+      "element": "astral",
+      "icon": "res://Ham_Sprite/Buffs/Grace.png",
+      "animation": "Grace",
+      "duration": 4,
+      "unique": true,
+      "form": false,
+      "formsprite": "none",
+      "harmful": false
+    }
+  },
+  "allies": {
+    "ExampleLanternWisp": {
+      "title": "ExampleLanternWisp",
+      "object_type": "ally",
+      "tags": [
+        "none",
+        "[color=#8030af]Astral[/color]"
+      ],
+      "family": "spirit",
+      "name": "Lantern Wisp",
+      "name_color": "[color=#60d0ff]Lantern Wisp[/color]",
+      "description": "A lamp-spirit drawn from the saint's ash-blue prayer.",
+      "quant": [
+        1,
+        1
+      ],
+      "size": 5,
+      "lvl": 5,
+      "hp": 40,
+      "speed": 8,
+      "speedmin": 1,
+      "arm": 5,
+      "dodge": [
+        5,
+        10
+      ],
+      "deflect": [
+        1,
+        5,
+        10
+      ],
+      "accuracy": [
+        10,
+        10
+      ],
+      "damage": [
+        6,
+        10
+      ],
+      "dmgtype": "astral",
+      "range_attack": 4,
+      "proj_art": "res://Ham_Sprite/Proj/Proj_Astral.png",
+      "sprite": "res://Ham_Sprite/Allies/PhantasmNew.png",
+      "abilities": [
+        "Familiar"
+      ],
+      "taunt": "\"The flame remembers.\"",
+      "sprite_corpse": "CorpsePurp",
+      "resist_slash": 0,
+      "resist_pierce": 0,
+      "resist_blunt": 0,
+      "resist_fire": 0,
+      "resist_ice": 25,
+      "resist_poison": 50,
+      "resist_blood": 50,
+      "resist_death": 0,
+      "resist_astral": 75,
+      "resist_psychic": 25,
+      "resist_lightning": 0
+    }
+  },
+  "trait_effects": {
+    "ExampleLanternBond": {
+      "effects": [
+        {
+          "trigger": "on_invoke",
+          "conditions": [
+            {
+              "type": "compare",
+              "left": "@label",
+              "op": "eq",
+              "right": "ExampleLanternVigil"
+            }
+          ],
+          "actions": [
+            {
+              "action": "queue_effects",
+              "effects": [
+                {
+                  "name": "add_buff",
+                  "buff": {
+                    "ref": "buffs.ExampleAshenWard",
+                    "target": "@unit",
+                    "source": "@unit",
+                    "duration": {
+                      "ref": "trait.Level",
+                      "mult": 4,
+                      "round": "int"
+                    }
+                  }
+                },
+                {
+                  "name": "summon_random",
+                  "alliance": "ally",
+                  "type": {
+                    "ref": "allies.ExampleLanternWisp"
+                  },
+                  "summoner": "@unit"
+                },
+                {
+                  "name": "magic_damage_target_closest",
+                  "caster": "@unit",
+                  "damage": {
+                    "ref": "trait.Level",
+                    "mult": 10,
+                    "round": "int"
+                  },
+                  "damage_type": "astral",
+                  "effect_sprite": "Astral"
+                }
+              ]
+            },
+            {
+              "action": "add_message",
+              "color": "[color=#60b0ff]",
+              "message": "Lantern Vigil kindles an [color=#8030af]Astral[/color] lamp."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "lore": {
+    "ExampleLanternBond": {
+      "title": "ExampleLanternBond",
+      "text": "The Lantern Saint's keepers carry ash in bronze censers and call little lights from it with a single low prayer. This example pack shows a custom invoke, buff, and summoned ally working together."
+    }
+  }
+}

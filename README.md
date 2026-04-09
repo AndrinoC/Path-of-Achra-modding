@@ -64,13 +64,15 @@ Changes take effect after restarting the game.
 
 ## Creating A Mod
 
-Use the included template:
+Use one of the included templates:
 
 ```text
 mods/template_mod/
+mods/template_runtime_pack/
+mods/template_items_pack/
 ```
 
-The included template is disabled by default.
+All templates are disabled by default.
 
 Other disabled example mods are also included:
 
@@ -78,12 +80,21 @@ Other disabled example mods are also included:
 - `mods/example_tempest_adept/`
 - `mods/example_wayfarer/`
 - `mods/example_content_pack/`
+- `mods/example_runtime_pack/`
+- `mods/template_runtime_pack/`
+- `mods/template_items_pack/`
 
 The examples are meant to read like game content:
 
 - colored trigger and element keywords
 - explicit values in descriptions when the effect uses fixed numbers
 - short lore text instead of placeholder developer text
+
+Use `template_mod` for a prestige template.
+
+Use `template_runtime_pack` for a custom skill or god setup that combines `invokes`, `buffs`, `allies`, and `trait_effects`.
+
+Use `template_items_pack` for a custom class that starts with a modded weapon and armor item.
 
 Recommended workflow:
 
@@ -93,6 +104,7 @@ Recommended workflow:
 4. Edit the display name, description, lore, unlock rule, and effects.
 5. Add your icon under `icons/`.
 6. Launch the game and test.
+
 
 ## Mod File Layout
 

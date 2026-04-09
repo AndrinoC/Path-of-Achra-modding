@@ -353,3 +353,31 @@ Supported `round` values:
 - `int`
 - `floor`
 - `ceil`
+
+### Supported Reference Roots
+
+- `player`
+- `land`
+- `buffs`
+- `allies`
+- `weapons`
+- `armor`
+- `invokes`
+
+### Dictionary Reference Overrides
+
+If a `ref` resolves to a dictionary, you can override or add fields in the same object.
+
+```json
+{
+  "name": "add_buff",
+  "buff": {
+    "ref": "buffs.MyCustomBuff",
+    "target": "@unit",
+    "source": "@unit",
+    "duration": 4
+  }
+}
+```
+
+This is useful for custom buffs and summoned allies, since you can reuse the top-level table entry and only set the runtime fields you need.
