@@ -96,6 +96,12 @@ Use `template_runtime_pack` for a custom skill or god setup that combines `invok
 
 Use `template_items_pack` for a custom class that starts with a modded weapon and armor item.
 
+If you want modded weapons or armor to appear in normal map treasure, set their `rarity` to match the real continent loot code:
+
+- `rarity: 1` for normal world treasure
+- `rarity: 2` for void treasure
+- `rarity: 0` if they should stay out of the continent treasure pools
+
 Recommended workflow:
 
 1. Copy `mods/template_mod/` to a new folder name.

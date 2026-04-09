@@ -82,6 +82,12 @@ Use:
 - `mods/template_items_pack/` to build a class that starts with your custom weapon and armor
 - `mods/example_content_pack/` as the concrete example of a class using modded starting gear
 
+For world-map treasure drops, item `rarity` follows the real continent generator:
+
+- `1` = normal world treasure
+- `2` = void treasure
+- `0` = excluded from continent treasure pools
+
 Use:
 
 - `unlocked_by_default: true` inside the entry if you want it visible without unlock progression

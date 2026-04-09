@@ -8,7 +8,7 @@
         "Description": "On [color=#ff8030]attack[/color], [color=#ff5050]if[/color] Main-hand is a [color=#ffff50]bare fist[/color]:\n\n     perform [color=#ffff50]1 extra attack[/color] against the target\n\n[color=#707070]Replace this text with your real effect once the template is working[/color]",
         "Description_Unit": "On attack with a bare fist: perform 1 extra attack.",
         "Element": "None",
-        "sprite": "icons/TemplatePrestige.png",
+        "sprite": "res://Ham_Sprite/TraitIcons/Ogham.png",
         "base": 0,
         "cost": 1,
         "infpen": false,

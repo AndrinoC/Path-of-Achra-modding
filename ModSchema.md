@@ -79,6 +79,24 @@ The other content tables use direct table entries.
 
 `trait_effects` lets custom non-prestige traits, such as modded skills, use the same trigger and action system as modded prestiges.
 
+## Item Loot Rarity
+
+Weapon and armor world-map treasure uses the same rarity filtering as the base game continent generator in `ToolGenerateContinent.gd`.
+
+Real code paths:
+
+- `gen_achra()` builds the normal land item pool from items where `rarity == 1`
+- `gen_dust()` builds the dust land item pool from items where `rarity == 1`
+- `change_to_void()` builds the void item pool from items where `rarity == 2`
+
+Use these values for modded `weapons` and `armor` if you want them to enter those loot pools:
+
+- `rarity: 1` = normal world-map treasure pool
+- `rarity: 2` = void treasure pool
+- `rarity: 0` = not added by the continent treasure pool logic
+
+This behavior is based on the actual item-pool generation code, not a loader-specific convention.
+
 ## Trait Section
 
 Required fields:
