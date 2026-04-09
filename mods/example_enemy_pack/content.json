@@ -1,0 +1,160 @@
+{
+  "enemies": {
+    "ExampleFenRaider": {
+      "title": "ExampleFenRaider",
+      "object_type": "enemy",
+      "tags": [
+        "none",
+        "[color=#30af40]Poison[/color]"
+      ],
+      "family": "humanoid",
+      "name": "Fen Raider",
+      "name_color": "[color=#6fbf5f]Fen Raider[/color]",
+      "sighting": "[color=#6fbf5f]Fen Raiders[/color] circle this place",
+      "description": "A moss-caked marauder that slips through the reeds with a hooked blade.",
+      "world": 0,
+      "tier": 1,
+      "tier_special": 99,
+      "quant": [
+        2,
+        4
+      ],
+      "size": 10,
+      "lvl": 4,
+      "hp": 140,
+      "cycle": [
+        "hit",
+        "none"
+      ],
+      "speed": 11,
+      "speedmin": 3,
+      "arm": 5,
+      "dodge": [
+        6,
+        10
+      ],
+      "deflect": [
+        1,
+        5,
+        10
+      ],
+      "damage": [
+        12,
+        10
+      ],
+      "accuracy": [
+        10,
+        10
+      ],
+      "dmgtype": "slash",
+      "range_attack": 1,
+      "proj_art": "none",
+      "sprite": "res://Ham_Sprite/TraitIcons/AuraSick.png",
+      "abilities": [
+        "none",
+        "none"
+      ],
+      "boss": false,
+      "summoned": false,
+      "rumor": "A wet trail of reeds and blood leads through the shallows.",
+      "intro": "none",
+      "taunt": "The [color=#6fbf5f]Fen Raider[/color] hisses through broken teeth...",
+      "sprite_corpse": "CorpseRed",
+      "resist_slash": 0,
+      "resist_pierce": 0,
+      "resist_blunt": 0,
+      "resist_fire": 0,
+      "resist_ice": 0,
+      "resist_poison": 25,
+      "resist_blood": 0,
+      "resist_death": 0,
+      "resist_astral": 0,
+      "resist_psychic": 0,
+      "resist_lightning": 0,
+      "speech": false,
+      "phrase": [
+        "none",
+        "none"
+      ],
+      "speechtype": "hisses"
+    },
+    "ExampleVoidPilgrim": {
+      "title": "ExampleVoidPilgrim",
+      "object_type": "enemy",
+      "tags": [
+        "none",
+        "[color=#8030af]Astral[/color]"
+      ],
+      "family": "humanoid",
+      "name": "Void Pilgrim",
+      "name_color": "[color=#9f7fff]Void Pilgrim[/color]",
+      "sighting": "[color=#9f7fff]Void Pilgrims[/color] haunt this breach",
+      "description": "A pale wanderer whose prayer-robes were scorched away by the starless gulf.",
+      "world": 1,
+      "tier": 5,
+      "tier_special": 99,
+      "quant": [
+        1,
+        2
+      ],
+      "size": 10,
+      "lvl": 12,
+      "hp": 260,
+      "cycle": [
+        "speed",
+        "hit"
+      ],
+      "speed": 14,
+      "speedmin": 3,
+      "arm": 10,
+      "dodge": [
+        8,
+        10
+      ],
+      "deflect": [
+        1,
+        5,
+        10
+      ],
+      "damage": [
+        18,
+        10
+      ],
+      "accuracy": [
+        12,
+        10
+      ],
+      "dmgtype": "astral",
+      "range_attack": 3,
+      "proj_art": "res://Ham_Sprite/Proj/Proj_Astral.png",
+      "sprite": "res://Ham_Sprite/TraitIcons/Astromancy.png",
+      "abilities": [
+        "none",
+        "none"
+      ],
+      "boss": false,
+      "summoned": false,
+      "rumor": "Ash-gray footprints lead toward a wound in the sky.",
+      "intro": "none",
+      "taunt": "The [color=#9f7fff]Void Pilgrim[/color] whispers to what remains of the stars...",
+      "sprite_corpse": "CorpsePurp",
+      "resist_slash": 0,
+      "resist_pierce": 0,
+      "resist_blunt": 0,
+      "resist_fire": 0,
+      "resist_ice": 0,
+      "resist_poison": 0,
+      "resist_blood": 0,
+      "resist_death": 0,
+      "resist_astral": 25,
+      "resist_psychic": 0,
+      "resist_lightning": 0,
+      "speech": false,
+      "phrase": [
+        "none",
+        "none"
+      ],
+      "speechtype": "whispers"
+    }
+  }
+}

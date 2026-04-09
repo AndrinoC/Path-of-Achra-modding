@@ -20,12 +20,14 @@ Recommended workflow:
 - Template: `mods/template_mod/`
 - Runtime template: `mods/template_runtime_pack/`
 - Class-and-gear template: `mods/template_items_pack/`
+- Enemy template: `mods/template_enemy_pack/`
 - Examples:
   - `mods/example_pitfighter/`
   - `mods/example_tempest_adept/`
   - `mods/example_wayfarer/`
   - `mods/example_content_pack/`
   - `mods/example_runtime_pack/`
+  - `mods/example_enemy_pack/`
 
 ## Supported Top-Level Sections
 
@@ -87,6 +89,12 @@ For world-map treasure drops, item `rarity` follows the real continent generator
 - `1` = normal world treasure
 - `2` = void treasure
 - `0` = excluded from continent treasure pools
+
+For custom enemies, the real spawn and nemesis rules are:
+
+- `summoned: false` = included in normal enemy spawn pools
+- `summoned: true` = excluded from normal enemy spawn pools
+- `tier: 1+` = eligible for the nemesis tab
 
 Use:
 

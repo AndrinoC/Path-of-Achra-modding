@@ -72,6 +72,7 @@ Use one of the included templates:
 mods/template_mod/
 mods/template_runtime_pack/
 mods/template_items_pack/
+mods/template_enemy_pack/
 ```
 
 All templates are disabled by default.
@@ -83,8 +84,10 @@ Other disabled example mods are also included:
 - `mods/example_wayfarer/`
 - `mods/example_content_pack/`
 - `mods/example_runtime_pack/`
+- `mods/example_enemy_pack/`
 - `mods/template_runtime_pack/`
 - `mods/template_items_pack/`
+- `mods/template_enemy_pack/`
 
 The examples are meant to read like game content:
 
@@ -98,11 +101,19 @@ Use `template_runtime_pack` for a custom skill or god setup that combines `invok
 
 Use `template_items_pack` for a custom class that starts with a modded weapon and armor item.
 
+Use `template_enemy_pack` for a custom enemy that should enter the normal spawn pools and the nemesis tab.
+
 If you want modded weapons or armor to appear in normal map treasure, set their `rarity` to match the real continent loot code:
 
 - `rarity: 1` for normal world treasure
 - `rarity: 2` for void treasure
 - `rarity: 0` if they should stay out of the continent treasure pools
+
+For custom enemies, the real spawn and nemesis rules come from `LEnemies.gd` and `Scenes/Bestiary.gd`:
+
+- `summoned: false` puts them in normal enemy spawn pools
+- `summoned: true` keeps them out of normal world spawns
+- `tier: 1+` makes them eligible for the nemesis tab
 
 Recommended workflow:
 

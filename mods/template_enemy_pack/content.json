@@ -1,0 +1,82 @@
+{
+  "enemies": {
+    "TemplateBogRaider": {
+      "title": "TemplateBogRaider",
+      "object_type": "enemy",
+      "tags": [
+        "none",
+        "none"
+      ],
+      "family": "humanoid",
+      "name": "Bog Raider",
+      "name_color": "[color=#6fbf5f]Bog Raider[/color]",
+      "sighting": "[color=#6fbf5f]Bog Raiders[/color] stalk this place",
+      "description": "A template enemy entry for custom world spawns and the nemesis tab.",
+      "world": 0,
+      "tier": 1,
+      "tier_special": 99,
+      "quant": [
+        2,
+        3
+      ],
+      "size": 10,
+      "lvl": 4,
+      "hp": 180,
+      "cycle": [
+        "hit",
+        "none"
+      ],
+      "speed": 10,
+      "speedmin": 3,
+      "arm": 5,
+      "dodge": [
+        6,
+        10
+      ],
+      "deflect": [
+        1,
+        5,
+        10
+      ],
+      "damage": [
+        12,
+        10
+      ],
+      "accuracy": [
+        10,
+        10
+      ],
+      "dmgtype": "slash",
+      "range_attack": 1,
+      "proj_art": "none",
+      "sprite": "res://Ham_Sprite/Enemies/SkirmisherGreen.png",
+      "abilities": [
+        "none",
+        "none"
+      ],
+      "boss": false,
+      "summoned": false,
+      "rumor": "Replace this with your own encounter hint.",
+      "intro": "none",
+      "taunt": "\"Replace this with your own enemy taunt.\"",
+      "sprite_corpse": "CorpseRed",
+      "resist_slash": 0,
+      "resist_pierce": 0,
+      "resist_blunt": 0,
+      "resist_fire": 0,
+      "resist_ice": 0,
+      "resist_poison": 0,
+      "resist_blood": 0,
+      "resist_death": 0,
+      "resist_astral": 0,
+      "resist_psychic": 0,
+      "resist_lightning": 0,
+      "speech": false,
+      "phrase": [
+        "none",
+        "none"
+      ],
+      "speechtype": "cries"
+    }
+  }
+}

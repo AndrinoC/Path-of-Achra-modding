@@ -50,6 +50,7 @@ This is useful for templates and example mods.
   "gods": { ... },
   "weapons": { ... },
   "armor": { ... },
+  "enemies": { ... },
   "invokes": { ... },
   "buffs": { ... },
   "allies": { ... },
@@ -67,6 +68,7 @@ This is useful for templates and example mods.
 - `gods`
 - `weapons`
 - `armor`
+- `enemies`
 - `invokes`
 - `buffs`
 - `allies`
@@ -96,6 +98,23 @@ Use these values for modded `weapons` and `armor` if you want them to enter thos
 - `rarity: 0` = not added by the continent treasure pool logic
 
 This behavior is based on the actual item-pool generation code, not a loader-specific convention.
+
+## Enemy Spawn Rules
+
+Custom enemies use direct entries merged into `Data/Table_Enemies.json`.
+
+Real code paths:
+
+- `LEnemies.get_enemies_of_tier()` includes entries where `summoned == false` and either `tier == <tile tier>` or `tier_special == <tile tier>`
+- `LEnemies.get_enemies_for_dust()` includes entries where `summoned == false`, `tier <= <tile tier>`, and `tier > 0`
+- `Scenes/Bestiary.gd` shows entries where `tier > 0`
+
+Use these values deliberately:
+
+- `summoned: false` if the enemy should enter normal spawn pools
+- `summoned: true` if it should stay out of normal world spawns
+- `tier: 1+` if it should appear in the nemesis tab and normal tiered spawning
+- `tier_special` for special tower or land-specific tier hooks when needed
 
 ## Trait Section
 
