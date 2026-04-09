@@ -29,8 +29,13 @@ These are the files changed in the tested setup:
 - `Scenes/Start_Menu.gd`
   - allow custom classes, races, and gods to appear in character creation
   - resolve missing saved selections safely when a mod is disabled
+  - resolve starting class gear from the merged weapon and armor tables
 - `Button_StartMenu.gd`
   - respect loader-provided default-unlocked content in the selection buttons
+- `LWep.gd` and `LArm.gd`
+  - rebuild runtime weapon and armor caches from merged table data after mods load
+- `ToolGenerateContinent.gd`
+  - build world-map treasure pools from merged weapon and armor data using the same rarity rules as the base game
 - UI files
   - use the loader texture fallback so external mod icons render correctly
 
@@ -59,12 +64,19 @@ The current setup reads mod state at startup, so changes made in the Mods panel 
 Current support includes:
 
 - merged prestige entries
+- merged skill entries
+- merged class, race, and god entries
+- merged weapon and armor entries
+- merged invoke, buff, ally, and lore entries
 - merged lore entries
 - title-screen mod enable or disable toggling
 - richer unlock rules
 - broader event trigger coverage
 - generic condition rules
 - direct queue-action passthrough via the external schema
+- synthetic generic start-trait entries for modded class, race, and god traits
+- trait-level context for queued-effect schema references
+- world-map item pool integration through item `rarity`
 
 ## Scope
 
@@ -74,6 +86,7 @@ This loader is intended to support lightweight prestige mods with:
 - external skill data
 - external class, race, and god data
 - external weapon and armor data
+- world-map treasure integration for external weapon and armor data through the normal continent generator rarity path
 - external lore
 - external icons
 - simple built-in combat behaviors

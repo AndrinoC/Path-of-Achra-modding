@@ -29,10 +29,15 @@ const TABLE_SECTION_MAP = {
 }
 
 const SPRITE_KEYS = ["sprite", "icon", "tile_sprite", "formsprite", "sprite_corpse", "world_icon"]
+const REF_SPEC_KEYS = ["ref", "mult", "div", "add", "sub", "min", "max", "round"]
 
 
 func _enter_tree():
 	load_mods()
+
+
+func _ready():
+	call_deferred("refresh_runtime_item_tables")
 
 
 func load_mods():
@@ -76,6 +81,7 @@ func load_mods():
 	mods.sort_custom(self, "sort_mods")
 	mods_all.sort_custom(self, "sort_mods")
 	rebuild_indexes()
+	call_deferred("refresh_runtime_item_tables")
 
 
 func ensure_mods_folder(mods_root):
@@ -165,6 +171,13 @@ func rebuild_indexes():
 	collect_table_patches()
 
 
+func refresh_runtime_item_tables():
+	if LWep != null:
+		LWep.reload_data()
+	if LArm != null:
+		LArm.reload_data()
+
+
 func normalize_prestige_definition(mod, title, definition):
 	if typeof(definition) != TYPE_DICTIONARY:
 		return null
@@ -219,6 +232,48 @@ func collect_table_patches():
 				if section_name == "classes" or section_name == "races" or section_name == "gods":
 					if entry_unlocked_by_default(section_data[key]):
 						default_unlocked_keys[key] = true
+
+	add_synthetic_start_traits()
+
+
+func add_synthetic_start_traits():
+	add_synthetic_start_traits_from_table("res://Data/Table_Races.json", "racial")
+	add_synthetic_start_traits_from_table("res://Data/Table_Classes.json", "class")
+	add_synthetic_start_traits_from_table("res://Data/Table_Gods.json", "god")
+
+
+func add_synthetic_start_traits_from_table(source_table_path, origin):
+	if table_patches.has(source_table_path) == false:
+		return
+	for key in table_patches[source_table_path]:
+		var entry = table_patches[source_table_path][key]
+		if typeof(entry) != TYPE_DICTIONARY:
+			continue
+		var trait_title = str(entry.get("trait", "none"))
+		if trait_title == "" or trait_title == "none":
+			continue
+		add_synthetic_start_trait(trait_title, origin)
+
+
+func add_synthetic_start_trait(trait_title, origin):
+	var generic_table_path = "res://Data/Table_TraitsGeneric.json"
+	if table_patches[generic_table_path].has(trait_title):
+		return
+
+	var skill_table_path = "res://Data/Table_Traits.json"
+	if table_patches.has(skill_table_path) == false:
+		return
+	if table_patches[skill_table_path].has(trait_title) == false:
+		return
+
+	var trait = cloner.clone_dict(table_patches[skill_table_path][trait_title])
+	trait["generic"] = true
+	trait["organize"] = origin
+	trait["levelable"] = false
+	trait["Element"] = "None"
+	trait["base"] = 0
+	trait["cost"] = 1
+	table_patches[generic_table_path][trait_title] = trait
 
 
 func entry_unlocked_by_default(entry):
@@ -444,6 +499,21 @@ func merge_loaded_data(path, loaded_data):
 			break
 
 	return loaded_data
+
+
+func get_active_mod_table_entries(section_name):
+	var merged_entries = {}
+	for mod in mods:
+		var section_data = get_mod_content_section(mod, section_name)
+		if typeof(section_data) != TYPE_DICTIONARY:
+			continue
+		for key in section_data:
+			merged_entries[key] = normalize_table_entry(mod, section_data[key], key)
+	return merged_entries
+
+
+func has_active_mod_table_entry(section_name, title):
+	return get_active_mod_table_entries(section_name).has(title)
 
 
 func has_prestige(title):
@@ -734,6 +804,8 @@ func apply_prestige_trigger(trigger, context):
 				continue
 			if str(effect.get("trigger", "")) != trigger:
 				continue
+			context["trait"] = trigger_traits[title]
+			context["trait_title"] = title
 			if conditions_are_met(effect.get("conditions", []), context, trigger_unit) == false:
 				continue
 
@@ -972,7 +1044,15 @@ func resolve_schema_value(value, context):
 		return out_array
 	if value_type == TYPE_DICTIONARY:
 		if value.has("ref"):
-			return evaluate_ref_spec(value, context)
+			var resolved = evaluate_ref_spec(value, context)
+			if typeof(resolved) == TYPE_DICTIONARY:
+				var merged = cloner.clone_dict(resolved)
+				for key in value:
+					if key in REF_SPEC_KEYS:
+						continue
+					merged[key] = resolve_schema_value(value[key], context)
+				return merged
+			return resolved
 		var out_dict = {}
 		for key in value:
 			out_dict[key] = resolve_schema_value(value[key], context)
@@ -1031,6 +1111,16 @@ func resolve_ref_root(root, context):
 			return Global.Player
 		"land":
 			return StateWorld.land
+		"buffs":
+			return LBuffs.buff_data
+		"allies":
+			return LAllies.ally_data
+		"weapons":
+			return LWep.weapon_data
+		"armor":
+			return LArm.armor_data
+		"invokes":
+			return loader.load_data("res://Data/Table_Invokes.json")
 
 	return null
 
