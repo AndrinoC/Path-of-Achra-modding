@@ -1,14 +1,14 @@
 {
   "prestiges": {
-    "TemplatePrestige": {
+    "ReedboundAscetic": {
       "trait": {
-        "title": "TemplatePrestige",
-        "Name": "[color=#70ff60]Template Prestige[/color]",
+        "title": "ReedboundAscetic",
+        "Name": "[color=#70ff60]Reedbound Ascetic[/color]",
         "Level": 1,
-        "Description": "On [color=#ff8030]attack[/color], [color=#ff5050]if[/color] Main-hand is a [color=#ffff50]bare fist[/color]:\n\n     perform [color=#ffff50]1 extra attack[/color] against the target\n\n[color=#707070]Replace this text with your real effect once the template is working[/color]",
+        "Description": "On [color=#ff8030]attack[/color], [color=#ff5050]if[/color] Main-hand is a [color=#ffff50]bare Fist[/color]:\n\n     perform [color=#ffff50]1 extra attack[/color] against the target\n\nThe causeway monks strike once with knuckles and once with the reed-whip of their own stance.",
         "Description_Unit": "On attack with a bare fist: perform 1 extra attack.",
         "Element": "None",
-        "sprite": "res://Ham_Sprite/TraitIcons/Ogham.png",
+        "sprite": "res://mods/reedbound_ascetic/icons/reedbound_ascetic.png",
         "base": 0,
         "cost": 1,
         "infpen": false,
@@ -18,12 +18,12 @@
         "levelable": false
       },
       "lore": {
-        "title": "TemplatePrestige",
-        "text": "Replace this with your prestige lore after the template is visible and working in-game."
+        "title": "ReedboundAscetic",
+        "text": "The monks of the drowned causeways harden their hands on shrine-stone and strike in paired rhythms, one blow of flesh, one blow of doctrine. Their reeds bend with the marsh-wind, but their bodies do not."
       },
       "unlock": {
         "type": "always",
-        "label": "[color=#70ff60]No requirement[/color] [color=#707070](test)[/color]"
+        "label": "[color=#70ff60]Known to all[/color] [color=#707070](showcase)[/color]"
       },
       "effects": [
         {
@@ -39,7 +39,7 @@
             {
               "action": "add_message",
               "color": "[color=#c0c0c0]",
-              "message": "Template Prestige [color=#ff8030]triggers[/color]."
+              "message": "[color=#70ff60]Reedbound Ascetic[/color] lashes out again."
             },
             {
               "action": "extra_attack_same_target",

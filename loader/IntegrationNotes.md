@@ -30,12 +30,19 @@ These are the files changed in the tested setup:
   - allow custom classes, races, and gods to appear in character creation
   - resolve missing saved selections safely when a mod is disabled
   - resolve starting class gear from the merged weapon and armor tables
+  - fall back safely when a modded race skin variant is missing
 - `Button_StartMenu.gd`
   - respect loader-provided default-unlocked content in the selection buttons
 - `LWep.gd` and `LArm.gd`
   - rebuild runtime weapon and armor caches from merged table data after mods load
+- `LEnemies.gd`
+  - rebuild runtime enemy caches from merged enemy data after mods load
 - `ToolGenerateContinent.gd`
   - build world-map treasure pools from merged weapon and armor data using the same rarity rules as the base game
+- `Scenes/Player.gd`
+  - use the loader texture fallback for modded body and equipment layers in-world
+- `Scenes/UI_Inv.gd`
+  - use the loader texture fallback for the inventory paper-doll body and equipment layers
 - UI files
   - use the loader texture fallback so external mod icons render correctly
 
@@ -67,6 +74,7 @@ Current support includes:
 - merged skill entries
 - merged class, race, and god entries
 - merged weapon and armor entries
+- merged enemy entries
 - merged invoke, buff, ally, and lore entries
 - merged lore entries
 - title-screen mod enable or disable toggling
@@ -77,6 +85,9 @@ Current support includes:
 - synthetic generic start-trait entries for modded class, race, and god traits
 - trait-level context for queued-effect schema references
 - world-map item pool integration through item `rarity`
+- mod-local texture loading for `sprite`, `icon`, `icon_small`, and `proj_art`
+- filesystem-first loading for `res://mods/...` art used by in-game player and UI layers
+- auto-resize of non-`32x32` mod images to the game's expected sprite footprint
 
 ## Scope
 
@@ -88,7 +99,7 @@ This loader is intended to support lightweight prestige mods with:
 - external weapon and armor data
 - world-map treasure integration for external weapon and armor data through the normal continent generator rarity path
 - external lore
-- external icons
+- external icons and player-layer sprites
 - simple built-in combat behaviors
 - title-screen mod enable or disable toggling
 

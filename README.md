@@ -64,18 +64,18 @@ You can then open the in-game `Mods` button to enable or disable the mod.
 
 Changes take effect after restarting the game.
 
-## Creating A Mod
+## Included Showcase Mods
 
-Use one of the included templates:
+The repository now ships with curated showcase mods instead of blank templates:
 
 ```text
-mods/template_mod/
-mods/template_runtime_pack/
-mods/template_items_pack/
-mods/template_enemy_pack/
+mods/reedbound_ascetic/
+mods/lantern_saint/
+mods/causeway_warden/
+mods/fen_hunt/
 ```
 
-All templates are disabled by default.
+All showcase mods are disabled by default.
 
 Other disabled example mods are also included:
 
@@ -85,23 +85,21 @@ Other disabled example mods are also included:
 - `mods/example_content_pack/`
 - `mods/example_runtime_pack/`
 - `mods/example_enemy_pack/`
-- `mods/template_runtime_pack/`
-- `mods/template_items_pack/`
-- `mods/template_enemy_pack/`
 
-The examples are meant to read like game content:
+The included showcase mods are meant to read like finished game content:
 
 - colored trigger and element keywords
 - explicit values in descriptions when the effect uses fixed numbers
 - short lore text instead of placeholder developer text
+- real image files stored inside each mod folder
+- separate UI icon art and in-game sprite art where needed
 
-Use `template_mod` for a prestige template.
+Use the showcase packs as starting points:
 
-Use `template_runtime_pack` for a custom skill or god setup that combines `invokes`, `buffs`, `allies`, and `trait_effects`.
-
-Use `template_items_pack` for a custom class that starts with a modded weapon and armor item.
-
-Use `template_enemy_pack` for a custom enemy that should enter the normal spawn pools and the nemesis tab.
+- `reedbound_ascetic` for prestige mods
+- `lantern_saint` for gods, allies, buffs, invokes, and skill runtime effects
+- `causeway_warden` for races, classes, skills, and starting gear
+- `fen_hunt` for custom enemies and spawn-pool integration
 
 If you want modded weapons or armor to appear in normal map treasure, set their `rarity` to match the real continent loot code:
 
@@ -117,12 +115,22 @@ For custom enemies, the real spawn and nemesis rules come from `LEnemies.gd` and
 
 Recommended workflow:
 
-1. Copy `mods/template_mod/` to a new folder name.
-2. Rename the mod in `mod.json`.
-3. Replace `TemplatePrestige` in `content.json` with your internal prestige key.
-4. Edit the display name, description, lore, unlock rule, and effects.
-5. Add your icon under `icons/`.
-6. Launch the game and test.
+1. Copy the showcase mod closest to what you want.
+2. Rename the folder and `mod.json` id.
+3. Replace the internal keys in `content.json`.
+4. Swap the copied art in `icons/` for your own.
+5. Launch the game and test.
+
+For race bodies and starting gear, prefer separate files for UI and in-game layers:
+
+- `icon` for menus, buttons, and inventory item art
+- `sprite` for in-game body or equipment layering
+- `icon_small` for compact race UI icons when a race uses one
+- `proj_art` for custom projectile visuals when an entry supports it
+
+The loader supports `res://mods/...` art for these fields.
+
+For in-game body, weapon, and armor layers, make the `sprite` art fit the same `32x32` player-layer footprint as the base game. If you only reuse a portrait-style icon, it may technically load but still read poorly in-world.
 
 
 ## Mod File Layout
@@ -201,6 +209,8 @@ Example:
 ```json
 "sprite": "icons/MyPrestige.png"
 ```
+
+For entries that appear both in UI and on the player sprite, use separate files when needed. `icon` and `sprite` do not have to point to the same PNG.
 
 ## Testing Tips
 

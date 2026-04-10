@@ -29,7 +29,7 @@ const TABLE_SECTION_MAP = {
 	"res://Data/Table_Enemies.json": "enemies",
 }
 
-const SPRITE_KEYS = ["sprite", "icon", "tile_sprite", "formsprite", "sprite_corpse", "world_icon"]
+const SPRITE_KEYS = ["sprite", "icon", "icon_small", "tile_sprite", "formsprite", "sprite_corpse", "world_icon", "proj_art"]
 const REF_SPEC_KEYS = ["ref", "mult", "div", "add", "sub", "min", "max", "round"]
 
 
@@ -1199,26 +1199,39 @@ func is_numeric_value(value):
 
 
 func load_texture(path):
-	if str(path).begins_with("res://mods/") == false and icon_aliases.has(path) == false:
+	var mod_local_path = str(path).begins_with("res://mods/") or icon_aliases.has(path)
+	if mod_local_path == false:
 		var texture = load(path)
 		if texture != null:
 			return texture
 
-	var image = Image.new()
-	if image.load(path) == OK:
-		var image_texture = ImageTexture.new()
-		image_texture.create_from_image(image, 0)
-		return image_texture
+	if mod_local_path == false:
+		var image = Image.new()
+		if image.load(path) == OK:
+			resize_mod_image_if_needed(path, image)
+			var image_texture = ImageTexture.new()
+			image_texture.create_from_image(image, 0)
+			return image_texture
 
 	var filesystem_path = resolve_filesystem_path(path)
-	if filesystem_path != "" and filesystem_path != path:
+	if filesystem_path != "":
 		var image_file = Image.new()
 		if image_file.load(filesystem_path) == OK:
+			resize_mod_image_if_needed(filesystem_path, image_file)
 			var fs_texture = ImageTexture.new()
 			fs_texture.create_from_image(image_file, 0)
 			return fs_texture
 
 	return null
+
+
+func resize_mod_image_if_needed(path, image):
+	var normalized = str(path).replace("\\", "/").to_lower()
+	if normalized.find("/mods/") == -1:
+		return
+	if image.get_width() == 32 and image.get_height() == 32:
+		return
+	image.resize(32, 32, Image.INTERPOLATE_NEAREST)
 
 
 func resolve_filesystem_path(path):

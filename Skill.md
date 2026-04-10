@@ -17,10 +17,10 @@ Recommended workflow:
 
 - Short guide: `README.md`
 - Full schema: `ModSchema.md`
-- Template: `mods/template_mod/`
-- Runtime template: `mods/template_runtime_pack/`
-- Class-and-gear template: `mods/template_items_pack/`
-- Enemy template: `mods/template_enemy_pack/`
+- Showcase prestige mod: `mods/reedbound_ascetic/`
+- Showcase god and runtime mod: `mods/lantern_saint/`
+- Showcase class, race, and item mod: `mods/causeway_warden/`
+- Showcase enemy mod: `mods/fen_hunt/`
 - Examples:
   - `mods/example_pitfighter/`
   - `mods/example_tempest_adept/`
@@ -38,6 +38,7 @@ Recommended workflow:
 - `gods`
 - `weapons`
 - `armor`
+- `enemies`
 - `invokes`
 - `buffs`
 - `allies`
@@ -77,12 +78,21 @@ Top-level `buffs`, `allies`, `weapons`, `armor`, and `invokes` entries can also 
 
 Custom classes, races, and gods can be exposed in character creation.
 
-Custom item mods are best tested through class starting gear.
+Custom item mods are best demonstrated through class starting gear.
 
 Use:
 
-- `mods/template_items_pack/` to build a class that starts with your custom weapon and armor
-- `mods/example_content_pack/` as the concrete example of a class using modded starting gear
+- `mods/causeway_warden/` as a shipped showcase of class, race, skill, and starting gear working together
+- `mods/example_content_pack/` as a second concrete example of a class using modded starting gear
+
+For selection content and starting gear visuals:
+
+- `sprite` is the in-game body or equipment layer
+- `icon` is the larger menu or inventory icon
+- `icon_small` is supported for compact race UI icons
+- `proj_art` is supported for custom projectile visuals
+
+Do not assume one image works for every surface. UI icons can be denser or more decorative than the in-game player-layer sprites.
 
 For world-map treasure drops, item `rarity` follows the real continent generator:
 
@@ -95,6 +105,11 @@ For custom enemies, the real spawn and nemesis rules are:
 - `summoned: false` = included in normal enemy spawn pools
 - `summoned: true` = excluded from normal enemy spawn pools
 - `tier: 1+` = eligible for the nemesis tab
+
+Use:
+
+- `mods/fen_hunt/` as the shipped showcase of normal-tier and void-tier custom enemies
+- `mods/example_enemy_pack/` as the lighter example pack
 
 Use:
 

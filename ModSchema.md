@@ -81,6 +81,26 @@ The other content tables use direct table entries.
 
 `trait_effects` lets custom non-prestige traits, such as modded skills, use the same trigger and action system as modded prestiges.
 
+## Asset Paths
+
+The loader supports mod-local art referenced through `res://mods/<mod_id>/...`.
+
+Common supported fields include:
+
+- `sprite`
+- `icon`
+- `icon_small`
+- `proj_art`
+- `formsprite`
+- `tile_sprite`
+
+Use separate files when the same entry needs both menu art and in-game player-layer art.
+
+- `icon` is usually best for menus, buttons, and inventory art
+- `sprite` is used for in-game body, weapon, armor, ally, or enemy layering when the entry supports it
+
+For race bodies and equipment sprites, keep the art aligned to the base game's `32x32` player-layer footprint. Large portrait-style icons may look fine in UI but read badly in-world.
+
 ## Item Loot Rarity
 
 Weapon and armor world-map treasure uses the same rarity filtering as the base game continent generator in `ToolGenerateContinent.gd`.
