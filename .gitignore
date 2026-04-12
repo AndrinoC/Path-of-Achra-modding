@@ -1,0 +1,12 @@
+PathofAchra.exe
+PathofAchra.pck
+PathofAchra_*.pck
+PathofAchra_backup_*.pck
+PathofAchra_original_backup.pck
+gdre_tools.exe
+gdre_tools.pck
+GodotMonoDecompNativeAOT.dll
+steam_api64.dll
+steamsdk-godot.dll
+build_gdre/
+PathofAchra_loader_recovered/

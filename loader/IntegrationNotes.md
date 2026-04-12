@@ -39,10 +39,25 @@ These are the files changed in the tested setup:
   - rebuild runtime enemy caches from merged enemy data after mods load
 - `ToolGenerateContinent.gd`
   - build world-map treasure pools from merged weapon and armor data using the same rarity rules as the base game
+- `ToolGenerateLevel.gd`
+  - batch level generation steps so dungeon carving finishes immediately instead of waiting on visual timer slices
+  - cache A* tile lookup by id during generation
 - `Scenes/Player.gd`
   - use the loader texture fallback for modded body and equipment layers in-world
 - `Scenes/UI_Inv.gd`
   - use the loader texture fallback for the inventory paper-doll body and equipment layers
+- `Scenes/Game.gd`
+  - reduce repeated work in tile refresh and range-indicator updates
+- `Scenes/Tile.gd`
+  - cache hot child-node references and reuse cached textures during frequent tile updates
+- `Scenes/Tile_World.gd`
+  - cache world-map child-node references and repeated tier or sprite texture loads
+- `Scenes/Continent.gd`
+  - reuse cached map icon textures for selected tile, enemy, and item display
+- `Universal.gd`
+  - update the FPS label as plain text instead of rebuilding right-aligned BBCode every frame
+- `Scenes/Universal.tscn`
+  - widen or reposition the FPS label so the value stays on one line
 - UI files
   - use the loader texture fallback so external mod icons render correctly
 
@@ -88,6 +103,8 @@ Current support includes:
 - mod-local texture loading for `sprite`, `icon`, `icon_small`, and `proj_art`
 - filesystem-first loading for `res://mods/...` art used by in-game player and UI layers
 - auto-resize of non-`32x32` mod images to the game's expected sprite footprint
+- cached texture reuse for repeated base and mod texture lookups in hot UI paths
+- safer low-risk performance fixes in level generation and tile refresh paths
 
 ## Scope
 

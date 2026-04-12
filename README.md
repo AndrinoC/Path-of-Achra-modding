@@ -10,6 +10,19 @@ This guide is for the current loader-based setup.
 
 For the full prestige schema reference, see `ModSchema.md`.
 
+## Current Release Pack
+
+The current shipped `PathofAchra.pck` release is not only the loader-enabled pack.
+
+It also includes a few safe base-pack fixes that do not intentionally change game content:
+
+- faster level generation by batching floor generation steps instead of visually time-slicing them
+- cheaper texture lookups in hot UI and tile update paths through caching
+- lighter range-indicator and tile update loops
+- FPS counter text fixed to stay on one line
+
+Core content, loot rules, enemy pools, and mod schema behavior are meant to stay the same.
+
 ## Installing The Loader
 
 If the loader is not already installed:
@@ -31,6 +44,8 @@ Download `PathofAchra.pck` from the latest GitHub release, place it in the game 
 That enables external mods from the `mods/` folder.
 
 When the loader is installed, the title screen main menu will show a new `Mods` button above `Quit`.
+
+The current release pack also includes the base-pack quality-of-life fixes listed above, so you do not need a separate patch for them.
 
 Use that menu to:
 
