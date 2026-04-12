@@ -52,17 +52,20 @@ These are the files changed in the tested setup:
   - add hotkey support and score tracking for `Tame`
 - `Scenes/Enemy.gd`
   - allow enemy click targeting for `Tame`
+  - reduce speed-bar `_process()` churn by throttling redundant visual updates
 - `ToolSaveGraveyard.gd`
   - save Maqbara records under unique compatible keys instead of raw `title_name`
   - increase the Maqbara cap to `500`
   - batch viewed-state updates through a multi-key save path
 - `Scenes/Tile.gd`
   - cancel `Tame` target selection on ground click
+  - reduce per-frame deck-highlight work when selection state has not changed
 - `Scenes/UI_Inv.gd`
   - use the loader texture fallback for the inventory paper-doll body and equipment layers
 - `Scenes/Game.gd`
   - reduce repeated work in tile refresh and range-indicator updates
   - own the `Tame` action state, validation, chance calculation, and ally conversion
+  - stop range-indicator refresh from clearing every ground tile each time
 - `Scenes/Tile.gd`
   - cache hot child-node references and reuse cached textures during frequent tile updates
 - `Scenes/Tile_World.gd`
@@ -75,14 +78,25 @@ These are the files changed in the tested setup:
   - scroll large Maqbara record sets
   - use visible-button pooling instead of rebuilding the full visible set every wheel step
   - avoid duplicate graveyard loads on scene entry
+- `RouterEvents_OnDeath.gd`
+  - stop dead unit node processing and remove dead units from active turn scheduling
+- `Process_Queue2.gd`
+  - clean stale dead or invalid units from `active_units` before scheduling AI turns
 - `ToolMessageCreator.gd`
   - show `Tame` help text and per-target tame chance while selecting
 - `Process_Queue_Actions_Effects.gd`
   - resolve queued `Tame` attempts through the normal action effect pipeline
 - `Universal.gd`
   - update the FPS label as plain text instead of rebuilding right-aligned BBCode every frame
+  - reduce FPS label refresh frequency to avoid needless per-frame UI churn
 - `Scenes/Universal.tscn`
   - widen or reposition the FPS label so the value stays on one line
+- `Scenes/GameBars.gd`
+  - throttle repeated turn-bar and speed-bar UI updates when state is unchanged
+- `Scenes/UI.gd`
+  - only refresh glow indicator visibility when the glow state changes
+- `Scenes/DeckbuttonGrid.gd`
+  - avoid forcing the same mouse-mode state every frame
 - `Scenes/UI_GameMenu.gd` and `Scenes/DeathScreen.gd`
   - write Maqbara dust progress back to the selected unique graveyard key instead of only `title_name`
 - UI files
@@ -134,6 +148,7 @@ Current support includes:
 - safer low-risk performance fixes in level generation and tile refresh paths
 - a fixed once-per-map `Tame` action that is independent from religion-based invoke logic
 - Maqbara record-key upgrades, 500-record support, and wheel-scrolling for large graveyard sets
+- safer runtime cleanup for dead units and several lower-churn `_process()` loops in combat and UI scenes
 
 ## Scope
 

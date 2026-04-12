@@ -1,5 +1,13 @@
 # Changelog
 
+## v2026.04.12.2
+
+- stop dead units from wasting per-frame processing after death
+- clean stale active-unit references before turn scheduling
+- reduce range-indicator work by only clearing previously lit tiles
+- throttle or cache several hot `_process()` UI and combat loops without changing game rules
+- keep release documentation aligned with the shipped `PathofAchra.pck`
+
 ## v2026.04.12.1
 
 - update Maqbara save keys so duplicate `title_name` heroes no longer overwrite each other

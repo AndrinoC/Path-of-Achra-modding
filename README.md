@@ -22,6 +22,8 @@ It also includes a few safe base-pack fixes that do not intentionally change gam
 - FPS counter text fixed to stay on one line
 - a new once-per-map `Tame` action that lets the player try to convert one visible enemy into an ally
 - Maqbara records no longer overwrite by `title_name`, now support up to `500` records, and the screen scrolls through large record sets
+- dead units stop wasting per-frame processing after death
+- several hot `_process()` UI and combat loops now update less often or only when state changes
 
 Core content, loot rules, enemy pools, and mod schema behavior are meant to stay the same.
 
@@ -57,6 +59,17 @@ The current release pack also updates the Maqbara system.
 - viewed-state writes are batched instead of rewriting the full save every hover
 
 This keeps duplicate hero names from overwriting each other and makes large record sets more usable.
+
+## Included Base Pack Update: Performance
+
+The current release pack also includes a small round of safe runtime cleanup work.
+
+- dead enemies and allies stop per-frame node processing after death
+- stale queued active-unit references are cleaned before turn scheduling
+- range highlights only clear tiles that were previously lit
+- several `_process()` loops now skip redundant work when nothing changed
+
+These changes are meant to reduce CPU churn without changing combat rules or content.
 
 ## Installing The Loader
 
