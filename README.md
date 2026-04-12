@@ -20,8 +20,30 @@ It also includes a few safe base-pack fixes that do not intentionally change gam
 - cheaper texture lookups in hot UI and tile update paths through caching
 - lighter range-indicator and tile update loops
 - FPS counter text fixed to stay on one line
+- a new once-per-map `Tame` action that lets the player try to convert one visible enemy into an ally
 
 Core content, loot rules, enemy pools, and mod schema behavior are meant to stay the same.
+
+## Included Base Pack Action: Tame
+
+The current release pack also adds a non-religion action named `Tame`.
+
+- hotkey: `4`
+- use limit: `1` per combat map
+- target: one visible enemy
+- result: roll a chance to convert that enemy into an ally
+
+Current tame chance uses:
+
+- your total `Willpower`
+- enemy `Willpower`
+- enemy normal `tier`
+- boss penalty
+- summoned bonus
+- missing-health bonus
+- distance-based minimum chance
+
+The implementation deliberately does **not** use religion or prayer charge logic.
 
 ## Installing The Loader
 

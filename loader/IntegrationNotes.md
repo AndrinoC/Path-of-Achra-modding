@@ -42,18 +42,32 @@ These are the files changed in the tested setup:
 - `ToolGenerateLevel.gd`
   - batch level generation steps so dungeon carving finishes immediately instead of waiting on visual timer slices
   - cache A* tile lookup by id during generation
+- `Scenes/Invokes.gd`
+  - add a fixed `Tame` combat action button separate from religion-based invokes
+- `Button_Invoke.gd`
+  - route the special `Tame` button through game-side logic instead of prayer casting
 - `Scenes/Player.gd`
   - use the loader texture fallback for modded body and equipment layers in-world
+  - add hotkey support and score tracking for `Tame`
+- `Scenes/Enemy.gd`
+  - allow enemy click targeting for `Tame`
+- `Scenes/Tile.gd`
+  - cancel `Tame` target selection on ground click
 - `Scenes/UI_Inv.gd`
   - use the loader texture fallback for the inventory paper-doll body and equipment layers
 - `Scenes/Game.gd`
   - reduce repeated work in tile refresh and range-indicator updates
+  - own the `Tame` action state, validation, chance calculation, and ally conversion
 - `Scenes/Tile.gd`
   - cache hot child-node references and reuse cached textures during frequent tile updates
 - `Scenes/Tile_World.gd`
   - cache world-map child-node references and repeated tier or sprite texture loads
 - `Scenes/Continent.gd`
   - reuse cached map icon textures for selected tile, enemy, and item display
+- `ToolMessageCreator.gd`
+  - show `Tame` help text and per-target tame chance while selecting
+- `Process_Queue_Actions_Effects.gd`
+  - resolve queued `Tame` attempts through the normal action effect pipeline
 - `Universal.gd`
   - update the FPS label as plain text instead of rebuilding right-aligned BBCode every frame
 - `Scenes/Universal.tscn`
@@ -105,6 +119,7 @@ Current support includes:
 - auto-resize of non-`32x32` mod images to the game's expected sprite footprint
 - cached texture reuse for repeated base and mod texture lookups in hot UI paths
 - safer low-risk performance fixes in level generation and tile refresh paths
+- a fixed once-per-map `Tame` action that is independent from religion-based invoke logic
 
 ## Scope
 
