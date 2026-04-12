@@ -1,5 +1,13 @@
 # Changelog
 
+## v2026.04.12.1
+
+- update Maqbara save keys so duplicate `title_name` heroes no longer overwrite each other
+- keep Maqbara reads backward compatible with older `graveyard.json` entries
+- raise the Maqbara record cap from `100` to `500`
+- add mouse-wheel scrolling for large Maqbara record sets
+- reduce Maqbara hitching by removing duplicate graveyard loads, batching viewed-state writes, and reusing visible button nodes
+
 ## v2026.04.12
 
 - add a new once-per-map `Tame` action on hotkey `4`

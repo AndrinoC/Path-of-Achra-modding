@@ -31,6 +31,7 @@ These are the files changed in the tested setup:
   - resolve missing saved selections safely when a mod is disabled
   - resolve starting class gear from the merged weapon and armor tables
   - fall back safely when a modded race skin variant is missing
+  - clear Maqbara-selected graveyard keys when starting a fresh run from normal character creation
 - `Button_StartMenu.gd`
   - respect loader-provided default-unlocked content in the selection buttons
 - `LWep.gd` and `LArm.gd`
@@ -51,6 +52,10 @@ These are the files changed in the tested setup:
   - add hotkey support and score tracking for `Tame`
 - `Scenes/Enemy.gd`
   - allow enemy click targeting for `Tame`
+- `ToolSaveGraveyard.gd`
+  - save Maqbara records under unique compatible keys instead of raw `title_name`
+  - increase the Maqbara cap to `500`
+  - batch viewed-state updates through a multi-key save path
 - `Scenes/Tile.gd`
   - cancel `Tame` target selection on ground click
 - `Scenes/UI_Inv.gd`
@@ -64,6 +69,12 @@ These are the files changed in the tested setup:
   - cache world-map child-node references and repeated tier or sprite texture loads
 - `Scenes/Continent.gd`
   - reuse cached map icon textures for selected tile, enemy, and item display
+- `Scenes/ButtonMaqbara.gd`
+  - support pooled Maqbara button rendering and wheel-scroll forwarding
+- `Scenes/Graveyard.gd`
+  - scroll large Maqbara record sets
+  - use visible-button pooling instead of rebuilding the full visible set every wheel step
+  - avoid duplicate graveyard loads on scene entry
 - `ToolMessageCreator.gd`
   - show `Tame` help text and per-target tame chance while selecting
 - `Process_Queue_Actions_Effects.gd`
@@ -72,6 +83,8 @@ These are the files changed in the tested setup:
   - update the FPS label as plain text instead of rebuilding right-aligned BBCode every frame
 - `Scenes/Universal.tscn`
   - widen or reposition the FPS label so the value stays on one line
+- `Scenes/UI_GameMenu.gd` and `Scenes/DeathScreen.gd`
+  - write Maqbara dust progress back to the selected unique graveyard key instead of only `title_name`
 - UI files
   - use the loader texture fallback so external mod icons render correctly
 
@@ -120,6 +133,7 @@ Current support includes:
 - cached texture reuse for repeated base and mod texture lookups in hot UI paths
 - safer low-risk performance fixes in level generation and tile refresh paths
 - a fixed once-per-map `Tame` action that is independent from religion-based invoke logic
+- Maqbara record-key upgrades, 500-record support, and wheel-scrolling for large graveyard sets
 
 ## Scope
 

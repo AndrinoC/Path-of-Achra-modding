@@ -21,6 +21,7 @@ It also includes a few safe base-pack fixes that do not intentionally change gam
 - lighter range-indicator and tile update loops
 - FPS counter text fixed to stay on one line
 - a new once-per-map `Tame` action that lets the player try to convert one visible enemy into an ally
+- Maqbara records no longer overwrite by `title_name`, now support up to `500` records, and the screen scrolls through large record sets
 
 Core content, loot rules, enemy pools, and mod schema behavior are meant to stay the same.
 
@@ -44,6 +45,18 @@ Current tame chance uses:
 - distance-based minimum chance
 
 The implementation deliberately does **not** use religion or prayer charge logic.
+
+## Included Base Pack Update: Maqbara
+
+The current release pack also updates the Maqbara system.
+
+- graveyard records now use stable unique keys instead of saving directly by `title_name`
+- older saves still load, and older records are upgraded compatibly on read
+- Maqbara capacity is now `500` records instead of `100`
+- the Maqbara grid now supports mouse-wheel scrolling for larger record sets
+- viewed-state writes are batched instead of rewriting the full save every hover
+
+This keeps duplicate hero names from overwriting each other and makes large record sets more usable.
 
 ## Installing The Loader
 
