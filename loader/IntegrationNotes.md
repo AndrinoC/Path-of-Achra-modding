@@ -12,6 +12,7 @@ These are the files changed in the tested setup:
   - create the loader node at startup
   - expose wrapper methods such as `merge_loaded_data()`, `load_mod_texture()`, and mod toggle helpers
   - provide a direct built-in feature config fallback for the `Tame` toggle path
+  - store per-floor range-cache state and pooled temporary effect nodes
 - `ToolLoaderJson.gd`
   - merge external prestige, skill, class, race, god, item, and lore data after loading JSON
 - `ToolPrestigeGiver.gd`
@@ -46,6 +47,7 @@ These are the files changed in the tested setup:
 - `ToolGenerateLevel.gd`
   - batch level generation steps so dungeon carving finishes immediately instead of waiting on visual timer slices
   - cache A* tile lookup by id during generation
+  - clear pure area range caches when a new floor is generated
 - `Scenes/Invokes.gd`
   - add a fixed `Tame` combat action button separate from religion-based invokes
 - `Button_Invoke.gd`
@@ -90,6 +92,13 @@ These are the files changed in the tested setup:
   - clean stale dead or invalid units from `active_units` before scheduling AI turns
 - `ToolMessageCreator.gd`
   - show `Tame` help text and per-target tame chance while selecting
+  - batch combat-log redraw requests through a deferred update path
+- `Tool_CalculateRange.gd`
+  - cache pure area tile-range lookups for repeated same-floor AoE scans
+- `ToolCreateEffect.gd`
+  - reuse pooled temporary animated effect nodes instead of always instancing new ones
+- `Scenes/EffectAnimated.gd`
+  - reset and recycle temporary animated effects back into the shared pool on expire
 - `Process_Queue_Actions_Effects.gd`
   - resolve queued `Tame` attempts through the normal action effect pipeline
 - `Universal.gd`
@@ -158,6 +167,7 @@ Current support includes:
 - Maqbara record-key upgrades, 500-record support, and wheel-scrolling for large graveyard sets
 - safer runtime cleanup for dead units and several lower-churn `_process()` loops in combat and UI scenes
 - a built-in Mods-tab toggle for enabling or disabling the `Tame` mechanic by restartable feature state
+- batched combat log updates, pooled temporary combat effects, and cached pure area range queries for heavy chain-combat scenarios
 
 ## Scope
 

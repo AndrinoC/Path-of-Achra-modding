@@ -1,5 +1,13 @@
 # Changelog
 
+## v2026.04.12.4
+
+- batch combat-log UI refreshes instead of rebuilding on every single message append
+- pool temporary animated combat effects to reduce node churn under large effect cascades
+- cache pure area tile-range queries per floor to reduce repeated full-ground scans
+- add a quiet `ModLoader.gdc` startup fallback for exported packs
+- keep release documentation aligned with the current shipped `PathofAchra.pck`
+
 ## v2026.04.12.3
 
 - expose `Tame` as a built-in Mods-tab feature toggle instead of a fixed always-on mechanic

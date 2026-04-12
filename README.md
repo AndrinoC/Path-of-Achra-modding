@@ -25,6 +25,7 @@ It also includes a few safe base-pack fixes that do not intentionally change gam
 - dead units stop wasting per-frame processing after death
 - several hot `_process()` UI and combat loops now update less often or only when state changes
 - the `Tame` mechanic is now a built-in toggleable feature in the Mods tab and defaults to off
+- combat log redraws, temporary combat effects, and pure area tile-range queries are now lighter under heavy chain scenarios
 
 Core content, loot rules, enemy pools, and mod schema behavior are meant to stay the same.
 
@@ -75,6 +76,9 @@ The current release pack also includes a small round of safe runtime cleanup wor
 - stale queued active-unit references are cleaned before turn scheduling
 - range highlights only clear tiles that were previously lit
 - several `_process()` loops now skip redundant work when nothing changed
+- combat log updates are deferred and batched per frame
+- temporary animated combat effects reuse pooled effect nodes
+- pure area tile-range queries are cached per floor
 
 These changes are meant to reduce CPU churn without changing combat rules or content.
 
