@@ -1,5 +1,13 @@
 # Changelog
 
+## v2026.04.12.3
+
+- expose `Tame` as a built-in Mods-tab feature toggle instead of a fixed always-on mechanic
+- make `Tame` default to off until explicitly enabled
+- keep the toggle visible even when no external mods are installed
+- stabilize the shipped pack after the toggle rollout with a clean rebuilt `PathofAchra.pck`
+- keep release documentation aligned with the current shipped pack behavior
+
 ## v2026.04.12.2
 
 - stop dead units from wasting per-frame processing after death

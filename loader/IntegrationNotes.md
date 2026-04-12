@@ -11,6 +11,7 @@ These are the files changed in the tested setup:
 - `global.gd`
   - create the loader node at startup
   - expose wrapper methods such as `merge_loaded_data()`, `load_mod_texture()`, and mod toggle helpers
+  - provide a direct built-in feature config fallback for the `Tame` toggle path
 - `ToolLoaderJson.gd`
   - merge external prestige, skill, class, race, god, item, and lore data after loading JSON
 - `ToolPrestigeGiver.gd`
@@ -26,12 +27,14 @@ These are the files changed in the tested setup:
 - `Scenes/First_Menu.gd`
   - add the title-screen `Mods` button and mod list panel
   - allow enable or disable toggling with restart-required messaging
+  - expose `Toggle Tame mechanic` as a built-in Mods-tab row even when no external mods exist
 - `Scenes/Start_Menu.gd`
   - allow custom classes, races, and gods to appear in character creation
   - resolve missing saved selections safely when a mod is disabled
   - resolve starting class gear from the merged weapon and armor tables
   - fall back safely when a modded race skin variant is missing
   - clear Maqbara-selected graveyard keys when starting a fresh run from normal character creation
+  - expose `Toggle Tame mechanic` as a built-in Mods-tab row even when no external mods exist
 - `Button_StartMenu.gd`
   - respect loader-provided default-unlocked content in the selection buttons
 - `LWep.gd` and `LArm.gd`
@@ -53,6 +56,9 @@ These are the files changed in the tested setup:
 - `Scenes/Enemy.gd`
   - allow enemy click targeting for `Tame`
   - reduce speed-bar `_process()` churn by throttling redundant visual updates
+- `ModLoader.gd`
+  - expose `Tame` as a built-in toggleable feature in the Mods tab
+  - persist built-in feature state through `mods-config.json`
 - `ToolSaveGraveyard.gd`
   - save Maqbara records under unique compatible keys instead of raw `title_name`
   - increase the Maqbara cap to `500`
@@ -120,6 +126,8 @@ The loader stores mod enabled or disabled state in:
 
 This is separate from normal game settings.
 
+Built-in feature toggles such as `Tame` also persist there under the same config file.
+
 The current setup reads mod state at startup, so changes made in the Mods panel require a restart.
 
 ## Current Supported Schema
@@ -149,6 +157,7 @@ Current support includes:
 - a fixed once-per-map `Tame` action that is independent from religion-based invoke logic
 - Maqbara record-key upgrades, 500-record support, and wheel-scrolling for large graveyard sets
 - safer runtime cleanup for dead units and several lower-churn `_process()` loops in combat and UI scenes
+- a built-in Mods-tab toggle for enabling or disabling the `Tame` mechanic by restartable feature state
 
 ## Scope
 

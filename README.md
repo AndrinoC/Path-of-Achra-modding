@@ -24,6 +24,7 @@ It also includes a few safe base-pack fixes that do not intentionally change gam
 - Maqbara records no longer overwrite by `title_name`, now support up to `500` records, and the screen scrolls through large record sets
 - dead units stop wasting per-frame processing after death
 - several hot `_process()` UI and combat loops now update less often or only when state changes
+- the `Tame` mechanic is now a built-in toggleable feature in the Mods tab and defaults to off
 
 Core content, loot rules, enemy pools, and mod schema behavior are meant to stay the same.
 
@@ -48,6 +49,12 @@ Current tame chance uses:
 
 The implementation deliberately does **not** use religion or prayer charge logic.
 
+`Tame` now ships as a built-in feature toggle in the Mods tab:
+
+- label: `Toggle Tame mechanic`
+- default state: `Disabled`
+- changes apply after restart
+
 ## Included Base Pack Update: Maqbara
 
 The current release pack also updates the Maqbara system.
@@ -70,6 +77,14 @@ The current release pack also includes a small round of safe runtime cleanup wor
 - several `_process()` loops now skip redundant work when nothing changed
 
 These changes are meant to reduce CPU churn without changing combat rules or content.
+
+## Included Base Pack Update: Built-in Feature Toggle
+
+The current release pack exposes `Tame` as a built-in restartable feature toggle.
+
+- no external mod folder content is required
+- state is saved in `user://mods-config.json`
+- the toggle appears in the Mods tab even when no external mods are installed
 
 ## Installing The Loader
 
