@@ -79,6 +79,7 @@ These are the files changed in the tested setup:
   - own the `Tame` action state, validation, chance calculation, and ally conversion
   - stop range-indicator refresh from clearing every ground tile each time
   - defer heavy full-room/UI refreshes during effect-chain processing and flush them at safe points
+  - track dirty tiles, dirty units, and dirty UI state so queued combat flushes can use partial room refreshes instead of always rebuilding the full room
 - `Scenes/Tile.gd`
   - cache hot child-node references and reuse cached textures during frequent tile updates
 - `Scenes/Tile_World.gd`
@@ -93,10 +94,22 @@ These are the files changed in the tested setup:
   - avoid duplicate graveyard loads on scene entry
 - `RouterEvents_OnDeath.gd`
   - stop dead unit node processing and remove dead units from active turn scheduling
+  - mark corpse and nearby tiles dirty so death cleanup can use partial room refreshes when safe
+- `RouterEvents_OnMove.gd`
+  - mark moved units, source and destination tiles, and deck/range/hover state dirty instead of forcing broad redraw work on every move
+- `RouterEvents_OnTeleport.gd`
+  - mark teleport source and destination state dirty for partial refresh handling
+- `RouterEvents_OnDamage.gd`
+  - mark attacker and defender state dirty after HP changes so enemy-only combat updates can stay local when safe
+- `RouterEvents_OnHeal.gd`
+  - mark healed and healer state dirty after HP changes
+- `RouterEvents_OnApplyBuff.gd` and `RouterEvents_OnRemoveBuff.gd`
+  - mark buff target state dirty so buff churn does not always require a full room redraw
 - `Process_Queue2.gd`
   - clean stale dead or invalid units from `active_units` before scheduling AI turns
 - `Process_Queue.gd`
   - preserve existing newest-first effect execution order while avoiding front-array removal churn in `queue_effects`
+  - mark direct fallback move updates dirty when movement resolves inside queue processing
 - `ToolMessageCreator.gd`
   - show `Tame` help text and per-target tame chance while selecting
   - batch combat-log redraw requests until control-return / end-of-turn style flush points during chain-heavy processing
@@ -116,6 +129,10 @@ These are the files changed in the tested setup:
   - recycle floating text popups safely and use delta-based lifetime timing for stable readability across framerates
 - `Process_Queue_Actions_Effects.gd`
   - resolve queued `Tame` attempts through the normal action effect pipeline
+- `ToolMagicMaker.gd`
+  - mark terrain-changing and buff-duration-changing effect paths dirty for partial room refreshes
+- `ToolSpawnUnit.gd`
+  - mark newly occupied summon tiles and related UI state dirty instead of relying on a full-room redraw
 - `Universal.gd`
   - update the FPS label as plain text instead of rebuilding right-aligned BBCode every frame
   - reduce FPS label refresh frequency to avoid needless per-frame UI churn

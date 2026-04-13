@@ -1,5 +1,11 @@
 # Changelog
 
+## v2026.04.13.2
+
+- add a dirty partial room refresh path so chained combat flushes can update only changed tiles and units instead of rebuilding the whole room every time
+- mark movement, teleport, death, damage, heal, buff, summon, and terrain-change paths dirty so deck, range, hover, and full refresh work only run when needed
+- keep release documentation aligned with the current shipped `PathofAchra.pck`
+
 ## v2026.04.13.1
 
 - add a built-in `Toggle Combat log processing` feature to the Mods tab
