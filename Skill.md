@@ -140,6 +140,8 @@ Known patched script paths in the live pack include:
 - Added `ToolAstar.gd` tile arrays for direct id-to-tile lookup reuse
 - Added dirty partial room refreshes in `Scenes/Game.gd` so queued combat flushes can update changed tiles/units/UI state without always rebuilding the full room
 - Marked movement, teleport, death, damage, heal, buff, summon, and terrain-change paths dirty so chained combat refreshes can stay local when safe
+- Replaced repeated full `queue_effects` cleaning passes with next-action inspection so long chained turns do not get slower as the queue grows
+- Optimized summon-flood paths by avoiding repeated summon info UI rebuilds, using lighter open-tile lookup, and tightening swarm scheduling and AI target searches
 
 ### Bug Fixes
 
@@ -286,6 +288,7 @@ Published releases already include:
 - `v2026.04.13`
 - `v2026.04.13.1`
 - `v2026.04.13.2`
+- `v2026.04.13.3`
 
 Latest documented repo state from the earlier session:
 
@@ -297,10 +300,12 @@ Latest local pack work after that state:
 - shipped additional live-pack optimizations for deckbutton rebuilds and target/path helpers
 - updated live `PathofAchra.pck` locally after compiling and patching new `.gdc` files
 - shipped a second pass that adds dirty partial `update_game()` refreshes for chained combat instead of always doing full room/UI rebuilds on queued flushes
+- shipped a third pass for long Okokorpus-style chain scenarios by replacing repeated full queue cleaning and cutting summon-swarm overhead around scheduling, targeting, and summon placement
 
 ## Next Likely Targets
 
 - More careful AoE visual flood compression
+- visual and popup flood compression for repeated summon or damage bursts
 - More start-menu / build-menu caching if needed
 - `Process_Queue2.gd` active-unit membership optimization if summon floods still spike
 - lower-priority menu/UI churn such as `Scenes/Lines.gd` per-frame redraw if still relevant

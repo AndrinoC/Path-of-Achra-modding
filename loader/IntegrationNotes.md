@@ -107,9 +107,11 @@ These are the files changed in the tested setup:
   - mark buff target state dirty so buff churn does not always require a full room redraw
 - `Process_Queue2.gd`
   - clean stale dead or invalid units from `active_units` before scheduling AI turns
+  - keep an active-unit membership set so large summon swarms avoid repeated linear membership checks and erase churn
 - `Process_Queue.gd`
   - preserve existing newest-first effect execution order while avoiding front-array removal churn in `queue_effects`
   - mark direct fallback move updates dirty when movement resolves inside queue processing
+  - stop re-cleaning the entire effect queue before every effect pop and instead inspect only the next queued effect while preserving existing order
 - `ToolMessageCreator.gd`
   - show `Tame` help text and per-target tame chance while selecting
   - batch combat-log redraw requests until control-return / end-of-turn style flush points during chain-heavy processing
@@ -129,10 +131,16 @@ These are the files changed in the tested setup:
   - recycle floating text popups safely and use delta-based lifetime timing for stable readability across framerates
 - `Process_Queue_Actions_Effects.gd`
   - resolve queued `Tame` attempts through the normal action effect pipeline
+  - expose single-action queue inspection so long effect chains avoid repeated full queue rescans
 - `ToolMagicMaker.gd`
   - mark terrain-changing and buff-duration-changing effect paths dirty for partial room refreshes
+- `ToolAI.gd`
+  - search enemy residences directly instead of rescanning all ground tiles during swarm-heavy AI target selection
+- `Tool_CalculateRange.gd`
+  - provide direct closest-open-tile and one-pass random-open-tile helpers for summon placement
 - `ToolSpawnUnit.gd`
   - mark newly occupied summon tiles and related UI state dirty instead of relying on a full-room redraw
+  - stop rebuilding summon info UI for every repeated summon of the same unit type
 - `Universal.gd`
   - update the FPS label as plain text instead of rebuilding right-aligned BBCode every frame
   - reduce FPS label refresh frequency to avoid needless per-frame UI churn

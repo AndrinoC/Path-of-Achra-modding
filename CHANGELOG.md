@@ -1,5 +1,11 @@
 # Changelog
 
+## v2026.04.13.3
+
+- replace repeated full `queue_effects` cleaning passes with per-action inspection so long chained turns do not slow down as the effect queue grows
+- reduce summon-flood overhead by cutting repeated summon UI rebuilds, speeding open-tile selection, and tightening active-unit and AI target lookups in swarm scenarios
+- keep release documentation aligned with the current shipped `PathofAchra.pck`
+
 ## v2026.04.13.2
 
 - add a dirty partial room refresh path so chained combat flushes can update only changed tiles and units instead of rebuilding the whole room every time

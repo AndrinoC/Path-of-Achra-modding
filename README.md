@@ -30,6 +30,8 @@ It also includes a few safe base-pack fixes that do not intentionally change gam
 - character select, floating text, and chained combat refreshes are also lighter in the current pack
 - combat log processing itself can now be disabled from the Mods tab, including its in-game log UI buttons
 - chained combat room refreshes now use a dirty partial update path so enemy-only state changes do not rebuild the full room/UI every flush
+- long chained turns now inspect queued effects one-by-one instead of repeatedly rescanning the full effect queue before every pop
+- summon-flood scenarios now avoid repeated summon UI rebuilds and use lighter active-unit, AI, and open-tile lookup paths
 
 Core content, loot rules, enemy pools, and mod schema behavior are meant to stay the same.
 
@@ -90,6 +92,8 @@ The current release pack also includes a small round of safe runtime cleanup wor
 - heavy chained effect processing now defers full room/UI refresh work until safe flush points instead of refreshing after every single effect
 - queued combat refreshes now track dirty tiles, units, and UI state so many enemy-only updates avoid a full-room redraw
 - movement, teleport, damage, heal, buff, death, summon, and terrain-change paths now mark dirty state explicitly for partial refreshes
+- long chained effect queues now validate only the next action to execute instead of re-cleaning the full queue before each step
+- summon-heavy scenarios now use lighter open-tile selection, lighter active-unit membership checks, and lighter AI enemy-tile searches
 
 These changes are meant to reduce CPU churn without changing combat rules or content.
 
