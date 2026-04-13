@@ -90,6 +90,8 @@ These are the files changed in the tested setup:
   - stop dead unit node processing and remove dead units from active turn scheduling
 - `Process_Queue2.gd`
   - clean stale dead or invalid units from `active_units` before scheduling AI turns
+- `Process_Queue.gd`
+  - preserve existing newest-first effect execution order while avoiding front-array removal churn in `queue_effects`
 - `ToolMessageCreator.gd`
   - show `Tame` help text and per-target tame chance while selecting
   - batch combat-log redraw requests through a deferred update path
@@ -99,6 +101,9 @@ These are the files changed in the tested setup:
   - reuse pooled temporary animated effect nodes instead of always instancing new ones
 - `Scenes/EffectAnimated.gd`
   - reset and recycle temporary animated effects back into the shared pool on expire
+- `Scenes/Delayed_Event.gd`
+  - stop per-node `_process()` polling for delayed-event visuals
+  - keep delayed event execution logic in the same tick-order path
 - `Process_Queue_Actions_Effects.gd`
   - resolve queued `Tame` attempts through the normal action effect pipeline
 - `Universal.gd`
@@ -112,6 +117,8 @@ These are the files changed in the tested setup:
   - only refresh glow indicator visibility when the glow state changes
 - `Scenes/DeckbuttonGrid.gd`
   - avoid forcing the same mouse-mode state every frame
+- `Scenes/Game.gd`
+  - centralize delayed-event visual refreshes in a throttled game-level update path
 - `Scenes/UI_GameMenu.gd` and `Scenes/DeathScreen.gd`
   - write Maqbara dust progress back to the selected unique graveyard key instead of only `title_name`
 - UI files
@@ -168,6 +175,7 @@ Current support includes:
 - safer runtime cleanup for dead units and several lower-churn `_process()` loops in combat and UI scenes
 - a built-in Mods-tab toggle for enabling or disabling the `Tame` mechanic by restartable feature state
 - batched combat log updates, pooled temporary combat effects, and cached pure area range queries for heavy chain-combat scenarios
+- centralized delayed-event visual updates and an order-preserving `queue_effects` optimization for heavy chained combat
 
 ## Scope
 

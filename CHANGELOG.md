@@ -1,5 +1,12 @@
 # Changelog
 
+## v2026.04.12.5
+
+- move delayed-event visuals off per-node `_process()` into a throttled central update path
+- keep delayed-event execution order unchanged while reducing delayed-node visual polling cost
+- optimize `queue_effects` handling without changing its existing newest-first execution order
+- keep release documentation aligned with the current shipped `PathofAchra.pck`
+
 ## v2026.04.12.4
 
 - batch combat-log UI refreshes instead of rebuilding on every single message append
