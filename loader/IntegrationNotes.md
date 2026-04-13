@@ -29,6 +29,7 @@ These are the files changed in the tested setup:
   - add the title-screen `Mods` button and mod list panel
   - allow enable or disable toggling with restart-required messaging
   - expose `Toggle Tame mechanic` as a built-in Mods-tab row even when no external mods exist
+  - expose `Toggle Combat log processing` as a built-in Mods-tab row even when no external mods exist
 - `Scenes/Start_Menu.gd`
   - allow custom classes, races, and gods to appear in character creation
   - resolve missing saved selections safely when a mod is disabled
@@ -36,6 +37,7 @@ These are the files changed in the tested setup:
   - fall back safely when a modded race skin variant is missing
   - clear Maqbara-selected graveyard keys when starting a fresh run from normal character creation
   - expose `Toggle Tame mechanic` as a built-in Mods-tab row even when no external mods exist
+  - expose `Toggle Combat log processing` as a built-in Mods-tab row even when no external mods exist
   - cache victory marker title data instead of rescanning and deep-cloning the full graveyard on every open
 - `Button_StartMenu.gd`
   - respect loader-provided default-unlocked content in the selection buttons
@@ -61,6 +63,7 @@ These are the files changed in the tested setup:
   - reduce speed-bar `_process()` churn by throttling redundant visual updates
 - `ModLoader.gd`
   - expose `Tame` as a built-in toggleable feature in the Mods tab
+  - expose combat log processing as a built-in toggleable feature in the Mods tab
   - persist built-in feature state through `mods-config.json`
 - `ToolSaveGraveyard.gd`
   - save Maqbara records under unique compatible keys instead of raw `title_name`
@@ -97,6 +100,7 @@ These are the files changed in the tested setup:
 - `ToolMessageCreator.gd`
   - show `Tame` help text and per-target tame chance while selecting
   - batch combat-log redraw requests until control-return / end-of-turn style flush points during chain-heavy processing
+  - skip combat-log message accumulation and redraw work entirely when built-in combat log processing is disabled
 - `Tool_CalculateRange.gd`
   - cache pure area tile-range lookups for repeated same-floor AoE scans
 - `ToolCreateEffect.gd`
@@ -121,6 +125,7 @@ These are the files changed in the tested setup:
   - throttle repeated turn-bar and speed-bar UI updates when state is unchanged
 - `Scenes/UI.gd`
   - only refresh glow indicator visibility when the glow state changes
+  - hide and disable combat-log UI widgets when built-in combat log processing is disabled while keeping hover descriptions available
 - `Scenes/DeckbuttonGrid.gd`
   - avoid forcing the same mouse-mode state every frame
 - `Scenes/Game.gd`
@@ -148,7 +153,7 @@ The loader stores mod enabled or disabled state in:
 
 This is separate from normal game settings.
 
-Built-in feature toggles such as `Tame` also persist there under the same config file.
+Built-in feature toggles such as `Tame` and combat log processing also persist there under the same config file.
 
 The current setup reads mod state at startup, so changes made in the Mods panel require a restart.
 
@@ -180,6 +185,7 @@ Current support includes:
 - Maqbara record-key upgrades, 500-record support, and wheel-scrolling for large graveyard sets
 - safer runtime cleanup for dead units and several lower-churn `_process()` loops in combat and UI scenes
 - a built-in Mods-tab toggle for enabling or disabling the `Tame` mechanic by restartable feature state
+- a built-in Mods-tab toggle for enabling or disabling combat log processing by restartable feature state
 - batched combat log updates, pooled temporary combat effects, and cached pure area range queries for heavy chain-combat scenarios
 - centralized delayed-event visual updates and an order-preserving `queue_effects` optimization for heavy chained combat
 - deferred full-room refreshes, pooled floating text, and cached start-menu victory markers for better heavy-combat and large-save responsiveness

@@ -1,5 +1,12 @@
 # Changelog
 
+## v2026.04.13.1
+
+- add a built-in `Toggle Combat log processing` feature to the Mods tab
+- make combat-log disabling skip message accumulation and log redraw work instead of only hiding UI
+- hide and disable the in-combat log buttons when combat log processing is off while keeping hover descriptions available
+- keep release documentation aligned with the current shipped `PathofAchra.pck`
+
 ## v2026.04.13
 
 - defer full room/UI refresh work during heavy effect-chain processing and flush it at safe points instead of after every single effect

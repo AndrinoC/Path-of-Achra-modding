@@ -28,6 +28,7 @@ It also includes a few safe base-pack fixes that do not intentionally change gam
 - combat log redraws, temporary combat effects, and pure area tile-range queries are now lighter under heavy chain scenarios
 - delayed-event visuals and effect-queue handling are lighter under heavy chained combat without changing execution order
 - character select, floating text, and chained combat refreshes are also lighter in the current pack
+- combat log processing itself can now be disabled from the Mods tab, including its in-game log UI buttons
 
 Core content, loot rules, enemy pools, and mod schema behavior are meant to stay the same.
 
@@ -91,11 +92,22 @@ These changes are meant to reduce CPU churn without changing combat rules or con
 
 ## Included Base Pack Update: Built-in Feature Toggle
 
-The current release pack exposes `Tame` as a built-in restartable feature toggle.
+The current release pack exposes built-in restartable feature toggles.
 
 - no external mod folder content is required
 - state is saved in `user://mods-config.json`
-- the toggle appears in the Mods tab even when no external mods are installed
+- the toggles appear in the Mods tab even when no external mods are installed
+
+Current built-in toggles:
+
+- `Toggle Tame mechanic` — default `Disabled`
+- `Toggle Combat log processing` — default `Enabled`
+
+When combat log processing is disabled:
+
+- combat log messages stop being accumulated and redrawn
+- combat log UI buttons are hidden/disabled in combat
+- hover descriptions still remain available
 
 ## Installing The Loader
 
