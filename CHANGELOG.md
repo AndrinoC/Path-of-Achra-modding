@@ -1,5 +1,13 @@
 # Changelog
 
+## v2026.04.13
+
+- defer full room/UI refresh work during heavy effect-chain processing and flush it at safe points instead of after every single effect
+- switch combat log visibility updates to a stronger turn-end/control-return batching path for heavy chain scenarios
+- pool floating text popups and move popup lifetime to real-time delta-based timing so readability stays stable across framerates
+- cache character-select victory marker data so opening the start menu does not rescan and clone the full graveyard every time
+- keep release documentation aligned with the current shipped `PathofAchra.pck`
+
 ## v2026.04.12.5
 
 - move delayed-event visuals off per-node `_process()` into a throttled central update path

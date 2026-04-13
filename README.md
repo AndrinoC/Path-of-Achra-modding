@@ -27,6 +27,7 @@ It also includes a few safe base-pack fixes that do not intentionally change gam
 - the `Tame` mechanic is now a built-in toggleable feature in the Mods tab and defaults to off
 - combat log redraws, temporary combat effects, and pure area tile-range queries are now lighter under heavy chain scenarios
 - delayed-event visuals and effect-queue handling are lighter under heavy chained combat without changing execution order
+- character select, floating text, and chained combat refreshes are also lighter in the current pack
 
 Core content, loot rules, enemy pools, and mod schema behavior are meant to stay the same.
 
@@ -82,6 +83,9 @@ The current release pack also includes a small round of safe runtime cleanup wor
 - pure area tile-range queries are cached per floor
 - delayed-event visuals are updated centrally instead of by one `_process()` per delayed node
 - `queue_effects` keeps the same newest-first order while avoiding front-array removal churn
+- floating text popups reuse pooled nodes and keep a stable real-time lifetime instead of frame-based decay
+- character select reuses cached victory markers instead of rescanning and cloning the whole graveyard every open
+- heavy chained effect processing now defers full room/UI refresh work until safe flush points instead of refreshing after every single effect
 
 These changes are meant to reduce CPU churn without changing combat rules or content.
 

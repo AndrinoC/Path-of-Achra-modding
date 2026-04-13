@@ -36,6 +36,7 @@ These are the files changed in the tested setup:
   - fall back safely when a modded race skin variant is missing
   - clear Maqbara-selected graveyard keys when starting a fresh run from normal character creation
   - expose `Toggle Tame mechanic` as a built-in Mods-tab row even when no external mods exist
+  - cache victory marker title data instead of rescanning and deep-cloning the full graveyard on every open
 - `Button_StartMenu.gd`
   - respect loader-provided default-unlocked content in the selection buttons
 - `LWep.gd` and `LArm.gd`
@@ -74,6 +75,7 @@ These are the files changed in the tested setup:
   - reduce repeated work in tile refresh and range-indicator updates
   - own the `Tame` action state, validation, chance calculation, and ally conversion
   - stop range-indicator refresh from clearing every ground tile each time
+  - defer heavy full-room/UI refreshes during effect-chain processing and flush them at safe points
 - `Scenes/Tile.gd`
   - cache hot child-node references and reuse cached textures during frequent tile updates
 - `Scenes/Tile_World.gd`
@@ -94,7 +96,7 @@ These are the files changed in the tested setup:
   - preserve existing newest-first effect execution order while avoiding front-array removal churn in `queue_effects`
 - `ToolMessageCreator.gd`
   - show `Tame` help text and per-target tame chance while selecting
-  - batch combat-log redraw requests through a deferred update path
+  - batch combat-log redraw requests until control-return / end-of-turn style flush points during chain-heavy processing
 - `Tool_CalculateRange.gd`
   - cache pure area tile-range lookups for repeated same-floor AoE scans
 - `ToolCreateEffect.gd`
@@ -104,6 +106,10 @@ These are the files changed in the tested setup:
 - `Scenes/Delayed_Event.gd`
   - stop per-node `_process()` polling for delayed-event visuals
   - keep delayed event execution logic in the same tick-order path
+- `Process_Text.gd`
+  - pool floating text popup nodes instead of instancing a fresh popup for every damage/heal number
+- `Scenes/Text_Popup.gd`
+  - recycle floating text popups safely and use delta-based lifetime timing for stable readability across framerates
 - `Process_Queue_Actions_Effects.gd`
   - resolve queued `Tame` attempts through the normal action effect pipeline
 - `Universal.gd`
@@ -176,6 +182,7 @@ Current support includes:
 - a built-in Mods-tab toggle for enabling or disabling the `Tame` mechanic by restartable feature state
 - batched combat log updates, pooled temporary combat effects, and cached pure area range queries for heavy chain-combat scenarios
 - centralized delayed-event visual updates and an order-preserving `queue_effects` optimization for heavy chained combat
+- deferred full-room refreshes, pooled floating text, and cached start-menu victory markers for better heavy-combat and large-save responsiveness
 
 ## Scope
 
