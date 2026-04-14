@@ -1,8 +1,0 @@
-{
-  "id": "causeway_warden",
-  "name": "Causeway Warden",
-  "version": "1.0.0",
-  "author": "Andrinodino",
-  "enabled_by_default": false,
-  "load_order": 100
-}

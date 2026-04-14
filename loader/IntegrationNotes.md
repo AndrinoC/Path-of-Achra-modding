@@ -30,17 +30,21 @@ These are the files changed in the tested setup:
   - allow enable or disable toggling with restart-required messaging
   - expose `Toggle Tame mechanic` as a built-in Mods-tab row even when no external mods exist
   - expose `Toggle Combat log processing` as a built-in Mods-tab row even when no external mods exist
+  - expose `Toggle Item comparison` as a built-in Mods-tab row even when no external mods exist
 - `Scenes/Start_Menu.gd`
   - allow custom classes, races, and gods to appear in character creation
+  - merge modded invoke data into character-creation prayer setup so modded gods can provide non-null prayers
   - resolve missing saved selections safely when a mod is disabled
   - resolve starting class gear from the merged weapon and armor tables
   - fall back safely when a modded race skin variant is missing
   - clear Maqbara-selected graveyard keys when starting a fresh run from normal character creation
   - expose `Toggle Tame mechanic` as a built-in Mods-tab row even when no external mods exist
   - expose `Toggle Combat log processing` as a built-in Mods-tab row even when no external mods exist
+  - expose `Toggle Item comparison` as a built-in Mods-tab row even when no external mods exist
   - cache victory marker title data instead of rescanning and deep-cloning the full graveyard on every open
 - `Button_StartMenu.gd`
   - respect loader-provided default-unlocked content in the selection buttons
+  - fall back from missing `icon` art to `sprite` art for selection buttons
 - `LWep.gd` and `LArm.gd`
   - rebuild runtime weapon and armor caches from merged table data after mods load
 - `LEnemies.gd`
@@ -64,6 +68,7 @@ These are the files changed in the tested setup:
 - `ModLoader.gd`
   - expose `Tame` as a built-in toggleable feature in the Mods tab
   - expose combat log processing as a built-in toggleable feature in the Mods tab
+  - expose inventory item comparison as a built-in toggleable feature in the Mods tab
   - persist built-in feature state through `mods-config.json`
 - `ToolSaveGraveyard.gd`
   - save Maqbara records under unique compatible keys instead of raw `title_name`
@@ -74,6 +79,7 @@ These are the files changed in the tested setup:
   - reduce per-frame deck-highlight work when selection state has not changed
 - `Scenes/UI_Inv.gd`
   - use the loader texture fallback for the inventory paper-doll body and equipment layers
+  - add a toggleable item-comparison preview in inventory with dedicated compare-panel layout
 - `Scenes/Game.gd`
   - reduce repeated work in tile refresh and range-indicator updates
   - own the `Tame` action state, validation, chance calculation, and ally conversion
@@ -132,6 +138,7 @@ These are the files changed in the tested setup:
 - `Process_Queue_Actions_Effects.gd`
   - resolve queued `Tame` attempts through the normal action effect pipeline
   - expose single-action queue inspection so long effect chains avoid repeated full queue rescans
+  - recheck enemy-live gated queued effects at resolution time so effects documented as working only while enemies live do not keep firing after the last enemy dies
 - `ToolMagicMaker.gd`
   - mark terrain-changing and buff-duration-changing effect paths dirty for partial room refreshes
 - `ToolAI.gd`

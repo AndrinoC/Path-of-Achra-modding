@@ -1,8 +1,0 @@
-{
-  "id": "lantern_saint",
-  "name": "Saint of the Last Lamp",
-  "version": "1.0.0",
-  "author": "Andrinodino",
-  "enabled_by_default": false,
-  "load_order": 100
-}

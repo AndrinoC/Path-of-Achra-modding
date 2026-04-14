@@ -1,5 +1,14 @@
 # Changelog
 
+## v2026.04.14
+
+- add a built-in `Toggle Item comparison` feature to the Mods tab and move inventory item comparison into a dedicated two-column preview panel
+- add the enabled-by-default `Namtar, the Burnt Herald` external god mod with custom prayers and runtime support
+- add queue-time `if enemies live` safety checks so enemy-dependent heals, summons, and similar queued effects do not keep resolving after the last enemy dies
+- tighten Mods-tab layout and separate built-in toggles from external mods
+- remove previously bundled template, example, and showcase mods from this project snapshot
+- keep release documentation aligned with the current shipped `PathofAchra.pck`
+
 ## v2026.04.13.3
 
 - replace repeated full `queue_effects` cleaning passes with per-action inspection so long chained turns do not slow down as the effect queue grows

@@ -1,0 +1,122 @@
+{
+  "skills": {
+    "Namtar": {
+      "title": "Namtar",
+      "Name": "[color=#ff6030]Namtar's Brand[/color]",
+      "Level": 1,
+      "Description": "On [color=#ffff50]stand still[/color]:\n\n     deal 10 [color=#ff7000]Fire[/color] damage to yourself\n     apply [color=#ff6030]Ash Debt[/color] to yourself\n\nOn [color=#ffff50]game turn[/color]:\n\n     heal 5 for each ally\n     suffering a [color=#ff5050]harmful Effect[/color]\n\n[color=#707070]Effect[/color]\n[color=#ff6030]Ash Debt[/color]: per stack, your allies take 5 [color=#ff7000]Fire[/color] damage on [color=#ffff50]game turn[/color]",
+      "Description_Unit": "The burnt herald counts every wound you offer him and teaches your followers to carry it onward.",
+      "Element": "None",
+      "sprite": "res://mods/namtar_burnt_herald/icons/namtar_burnt_herald.png",
+      "base": 0,
+      "cost": 1,
+      "infpen": false,
+      "generic": true,
+      "reference": "AshDebt",
+      "organize": "god",
+      "levelable": false
+    }
+  },
+  "gods": {
+    "Namtar": {
+      "title": "Namtar",
+      "name": "[color=#ff6030]Namtar[/color]",
+      "trait": "Namtar",
+      "brief": "The fire-faced herald of the burning court. Counts each wound and teaches his followers to pass affliction from flesh to flesh.",
+      "description_start": "Prayers move curses onto allies, force their retaliation, and turn accumulated affliction into healing\n\nOn [color=#ffff50]stand still[/color]:\n\n     deal 10 [color=#ff7000]Fire[/color] damage to yourself\n     apply [color=#ff6030]Ash Debt[/color] to yourself\n\nOn [color=#ffff50]game turn[/color]:\n\n     heal 5 for each ally\n     suffering a [color=#ff5050]harmful Effect[/color]\n\n[color=#707070]Effect[/color]\n[color=#ff6030]Ash Debt[/color]: per stack, your allies take 5 [color=#ff7000]Fire[/color] damage on [color=#ffff50]game turn[/color]",
+      "prayer": "O [color=#ff6030]Namtar[/color],\n\nfire-faced herald,\n\nscribe of the burning court,\n\nwhat burns in me,\n\nburn in all,\n\nreceive this wound!",
+      "description": "You worship [color=#ff6030]Namtar, the Burnt Herald[/color].\n\nOn [color=#ffff50]stand still[/color], you deal 10 [color=#ff7000]Fire[/color] damage to yourself and gain [color=#ff6030]Ash Debt[/color].\n\nOn [color=#ffff50]game turn[/color], you heal 5 for each ally suffering a [color=#ff5050]harmful Effect[/color].\n\n[color=#ff6030]Ash Debt[/color] makes your allies take 5 [color=#ff7000]Fire[/color] damage per stack on [color=#ffff50]game turn[/color].\n\nNamtar's prayers cast your suffering into followers, force them to carry it into battle, and distill the resulting corruption into healing.",
+      "sprite": "res://mods/namtar_burnt_herald/icons/namtar_burnt_herald.png",
+      "icon": "res://mods/namtar_burnt_herald/icons/namtar_burnt_herald.png",
+      "invoke_1": "sahru",
+      "invoke_2": "rabisu",
+      "invoke_3": "balatu",
+      "str": 0,
+      "dex": 0,
+      "wil": 2,
+      "life": 25,
+      "speed": 0,
+      "locked": false,
+      "unlocked_by_default": true
+    }
+  },
+  "invokes": {
+    "sahru": {
+      "title": "sahru",
+      "name": "[color=#ff6030]Sahru[/color]",
+      "description": "Remove all [color=#ff5050]harmful Effects[/color] from yourself\n\nApply them to all allies\n\n[color=#78bca4]+1 charge[/color] when you [color=#ffff50]stand still[/color] if enemies live",
+      "description_short": "Remove all [color=#ff5050]harmful Effects[/color] from yourself and apply them to all allies\n[color=#78bca4]+1 charge[/color] when you [color=#ffff50]stand still[/color] if enemies live",
+      "reference": "none",
+      "use_max": 4,
+      "use_starting": 1,
+      "sprite": "res://mods/namtar_burnt_herald/icons/namtar_burnt_herald.png",
+      "level_required": 1,
+      "use": 1,
+      "use_recharge_type": "stand still",
+      "use_gain": 1,
+      "hotkey": 1,
+      "infpen": false,
+      "recharge_message": "[color=#ff6030]Namtar counts another wound.[/color]",
+      "use_lose": "none"
+    },
+    "rabisu": {
+      "title": "rabisu",
+      "name": "[color=#ff6030]Rabisu[/color]",
+      "description": "Force all allies to [color=#ff8030]hit[/color] 1 enemy in range\n\nReplicate their [color=#ff5050]harmful Effects[/color] onto that enemy\n\n[color=#78bca4]+1 charge[/color] when an adjacent ally is [color=#ffff50]damaged by an enemy[/color]",
+      "description_short": "Force all allies to [color=#ff8030]hit[/color] and replicate their [color=#ff5050]harmful Effects[/color] onto enemies\n[color=#78bca4]+1 charge[/color] when an adjacent ally is [color=#ffff50]damaged by an enemy[/color]",
+      "reference": "none",
+      "use_max": 3,
+      "use_starting": 0,
+      "sprite": "res://mods/namtar_burnt_herald/icons/namtar_burnt_herald.png",
+      "level_required": 10,
+      "use": 0,
+      "use_recharge_type": "adjacent ally damaged by enemy",
+      "use_gain": 1,
+      "hotkey": 2,
+      "infpen": false,
+      "recharge_message": "[color=#ff6030]Namtar tastes the wound.[/color]",
+      "use_lose": "none"
+    },
+    "balatu": {
+      "title": "balatu",
+      "name": "[color=#ff6030]Balatu[/color]",
+      "description": "Heal yourself and all allies based on how many [color=#ff5050]harmful Effects[/color] they currently have\n\n[color=#a0a0a0]Heal = 10 * your Willpower * harmful effects[/color]\n\n[color=#78bca4]+1 charge[/color] when you [color=#ffff50]stand still[/color] if enemies live",
+      "description_short": "Heal yourself and all allies based on their [color=#ff5050]harmful Effects[/color]\n[color=#a0a0a0]Heal = 10 * your Willpower * harmful effects[/color]\n[color=#78bca4]+1 charge[/color] when you [color=#ffff50]stand still[/color] if enemies live",
+      "reference": "none",
+      "use_max": 2,
+      "use_starting": 0,
+      "sprite": "res://mods/namtar_burnt_herald/icons/namtar_burnt_herald.png",
+      "level_required": 20,
+      "use": 0,
+      "use_recharge_type": "stand still",
+      "use_gain": 1,
+      "hotkey": 3,
+      "infpen": false,
+      "recharge_message": "[color=#ff6030]The burning court remembers you.[/color]",
+      "use_lose": "none"
+    }
+  },
+  "buffs": {
+    "AshDebt": {
+      "title": "AshDebt",
+      "name": "Ash Debt",
+      "description": "per stack: your allies take 5 [color=#ff7000]Fire[/color] damage on [color=#ffff50]game turn[/color]",
+      "color": "[color=#ff6030]",
+      "message": "Namtar counts the wound.",
+      "element": "fire",
+      "icon": "res://mods/namtar_burnt_herald/icons/namtar_burnt_herald.png",
+      "animation": "Burn",
+      "duration": 1,
+      "unique": true,
+      "form": false,
+      "formsprite": "none",
+      "harmful": false
+    }
+  },
+  "lore": {
+    "Namtar": {
+      "title": "Namtar",
+      "text": "Those who serve Namtar blacken their faces with soot and count each wound as a letter in his hidden scripture. Their curses are never theirs alone for long; what burns in one body is carried into another, until even mercy reeks of ash."
+    }
+  }
+}

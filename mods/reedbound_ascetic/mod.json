@@ -1,8 +1,0 @@
-{
-  "id": "reedbound_ascetic",
-  "name": "Reedbound Ascetic",
-  "version": "1.0.0",
-  "author": "Andrinodino",
-  "enabled_by_default": false,
-  "load_order": 100
-}

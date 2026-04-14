@@ -1,0 +1,8 @@
+{
+  "id": "namtar_burnt_herald",
+  "name": "Namtar, the Burnt Herald",
+  "version": "1.0.0",
+  "author": "OpenCode",
+  "enabled_by_default": true,
+  "load_order": 120
+}

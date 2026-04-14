@@ -29,9 +29,12 @@ It also includes a few safe base-pack fixes that do not intentionally change gam
 - delayed-event visuals and effect-queue handling are lighter under heavy chained combat without changing execution order
 - character select, floating text, and chained combat refreshes are also lighter in the current pack
 - combat log processing itself can now be disabled from the Mods tab, including its in-game log UI buttons
+- item comparison in inventory can now be toggled from the Mods tab
+- the inventory comparison preview now uses a dedicated two-column compare panel instead of cluttering the main description text
 - chained combat room refreshes now use a dirty partial update path so enemy-only state changes do not rebuild the full room/UI every flush
 - long chained turns now inspect queued effects one-by-one instead of repeatedly rescanning the full effect queue before every pop
 - summon-flood scenarios now avoid repeated summon UI rebuilds and use lighter active-unit, AI, and open-tile lookup paths
+- queued actions described as working only `if enemies live` now get rechecked at queue resolution time so enemy-dependent effects do not keep firing after the last enemy dies
 
 Core content, loot rules, enemy pools, and mod schema behavior are meant to stay the same.
 
@@ -109,6 +112,7 @@ Current built-in toggles:
 
 - `Toggle Tame mechanic` — default `Disabled`
 - `Toggle Combat log processing` — default `Enabled`
+- `Toggle Item comparison` — default `Enabled`
 
 When combat log processing is disabled:
 
@@ -159,11 +163,11 @@ mods/<mod_id>/
 Example:
 
 ```text
-mods/example_pitfighter/
+mods/namtar_burnt_herald/
   mod.json
   content.json
   icons/
-  PitFighter.png
+  namtar_burnt_herald.png
 ```
 
 Start the game. The loader scans `mods/` automatically.
@@ -172,42 +176,21 @@ You can then open the in-game `Mods` button to enable or disable the mod.
 
 Changes take effect after restarting the game.
 
-## Included Showcase Mods
+## Included External Mod
 
-The repository now ships with curated showcase mods instead of blank templates:
+The repository currently ships with one bundled external mod:
 
 ```text
-mods/reedbound_ascetic/
-mods/lantern_saint/
-mods/causeway_warden/
-mods/fen_hunt/
+mods/namtar_burnt_herald/
 ```
 
-All showcase mods are disabled by default.
+This mod is enabled by default and adds:
 
-Other disabled example mods are also included:
+- the god `Namtar, the Burnt Herald`
+- custom prayers
+- custom runtime support for its self-damage / affliction theme
 
-- `mods/example_pitfighter/`
-- `mods/example_tempest_adept/`
-- `mods/example_wayfarer/`
-- `mods/example_content_pack/`
-- `mods/example_runtime_pack/`
-- `mods/example_enemy_pack/`
-
-The included showcase mods are meant to read like finished game content:
-
-- colored trigger and element keywords
-- explicit values in descriptions when the effect uses fixed numbers
-- short lore text instead of placeholder developer text
-- real image files stored inside each mod folder
-- separate UI icon art and in-game sprite art where needed
-
-Use the showcase packs as starting points:
-
-- `reedbound_ascetic` for prestige mods
-- `lantern_saint` for gods, allies, buffs, invokes, and skill runtime effects
-- `causeway_warden` for races, classes, skills, and starting gear
-- `fen_hunt` for custom enemies and spawn-pool integration
+Previously bundled template, example, and showcase mods were removed from this project snapshot.
 
 If you want modded weapons or armor to appear in normal map treasure, set their `rarity` to match the real continent loot code:
 

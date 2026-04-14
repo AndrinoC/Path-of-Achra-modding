@@ -142,6 +142,7 @@ Known patched script paths in the live pack include:
 - Marked movement, teleport, death, damage, heal, buff, summon, and terrain-change paths dirty so chained combat refreshes can stay local when safe
 - Replaced repeated full `queue_effects` cleaning passes with next-action inspection so long chained turns do not get slower as the queue grows
 - Optimized summon-flood paths by avoiding repeated summon info UI rebuilds, using lighter open-tile lookup, and tightening swarm scheduling and AI target searches
+- Added queue-time guards for effects documented as working only while enemies live so those queued actions stop resolving once the last enemy dies
 
 ### Bug Fixes
 
@@ -160,6 +161,21 @@ Expose built-in toggles in the title-screen `Mods` tab, like Tame.
   - default enabled
   - when off, skips most combat log accumulation/redraw work
   - hides/disables combat log UI while keeping hover descriptions working
+- `Toggle Item comparison`
+  - default enabled
+  - controls the inventory compare panel preview
+
+### Inventory QoL
+
+- Added a built-in inventory item comparison preview
+- Moved comparison into a dedicated two-column side panel
+- Added comparison layout and Mods-tab toggle polish for the feature
+
+### External Mod Content
+
+- Added enabled-by-default external god mod: `mods/namtar_burnt_herald/`
+- God added: `Namtar, the Burnt Herald`
+- Includes custom prayers and runtime hooks for its self-damage / affliction mechanics
 
 ## Tame Mechanic Notes
 
@@ -172,26 +188,14 @@ Expose built-in toggles in the title-screen `Mods` tab, like Tame.
 
 ## Mod Folder Rule
 
-- Keep the live local `mods/` folder empty when requested for the deployed game setup.
-- Do not delete tracked example/showcase mods from the Git repo.
-- If `git status` shows example mod deletions in this install snapshot, do not commit them accidentally.
+- Current project snapshot no longer keeps the old bundled example/showcase mods.
+- Current bundled external mod content is `mods/namtar_burnt_herald/`.
 
 ## Existing Mod Content References
 
-- These references are repo-oriented and may not be present in the live install snapshot if the local `mods/` folder has been cleared.
 - Short guide: `README.md`
 - Full schema: `ModSchema.md`
-- Showcase prestige mod: `mods/reedbound_ascetic/`
-- Showcase god and runtime mod: `mods/lantern_saint/`
-- Showcase class, race, and item mod: `mods/causeway_warden/`
-- Showcase enemy mod: `mods/fen_hunt/`
-- Examples:
-  - `mods/example_pitfighter/`
-  - `mods/example_tempest_adept/`
-  - `mods/example_wayfarer/`
-  - `mods/example_content_pack/`
-  - `mods/example_runtime_pack/`
-  - `mods/example_enemy_pack/`
+- Included external god mod: `mods/namtar_burnt_herald/`
 
 ## Supported Top-Level Mod Sections
 
@@ -289,6 +293,7 @@ Published releases already include:
 - `v2026.04.13.1`
 - `v2026.04.13.2`
 - `v2026.04.13.3`
+- `v2026.04.14`
 
 Latest documented repo state from the earlier session:
 
@@ -301,11 +306,14 @@ Latest local pack work after that state:
 - updated live `PathofAchra.pck` locally after compiling and patching new `.gdc` files
 - shipped a second pass that adds dirty partial `update_game()` refreshes for chained combat instead of always doing full room/UI rebuilds on queued flushes
 - shipped a third pass for long Okokorpus-style chain scenarios by replacing repeated full queue cleaning and cutting summon-swarm overhead around scheduling, targeting, and summon placement
+- shipped inventory comparison UI plus a built-in Mods-tab toggle for it
+- added the default-enabled `Namtar` external god mod with custom prayers and runtime support
+- added broader queue-time safety for enemy-live-gated effects so they stop after the last enemy dies
 
 ## Next Likely Targets
 
 - More careful AoE visual flood compression
 - visual and popup flood compression for repeated summon or damage bursts
 - More start-menu / build-menu caching if needed
-- `Process_Queue2.gd` active-unit membership optimization if summon floods still spike
 - lower-priority menu/UI churn such as `Scenes/Lines.gd` per-frame redraw if still relevant
+- deeper audit of other sequencing-sensitive phrasing beyond explicit `if enemies live` descriptions if more reports appear
