@@ -70,6 +70,7 @@ These are the files changed in the tested setup:
   - expose combat log processing as a built-in toggleable feature in the Mods tab
   - expose inventory item comparison as a built-in toggleable feature in the Mods tab
   - persist built-in feature state through `mods-config.json`
+  - backfill `requires_enemies_alive` for older trait, buff, and invoke content that still relies on `if enemies live` description text
 - `ToolSaveGraveyard.gd`
   - save Maqbara records under unique compatible keys instead of raw `title_name`
   - increase the Maqbara cap to `500`
@@ -138,7 +139,7 @@ These are the files changed in the tested setup:
 - `Process_Queue_Actions_Effects.gd`
   - resolve queued `Tame` attempts through the normal action effect pipeline
   - expose single-action queue inspection so long effect chains avoid repeated full queue rescans
-  - recheck enemy-live gated queued effects at resolution time so effects documented as working only while enemies live do not keep firing after the last enemy dies
+  - recheck queued effects marked with `requires_enemies_alive` at resolution time so enemy-dependent actions do not keep firing after the last enemy dies
 - `ToolMagicMaker.gd`
   - mark terrain-changing and buff-duration-changing effect paths dirty for partial room refreshes
 - `ToolAI.gd`

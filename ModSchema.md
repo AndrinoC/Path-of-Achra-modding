@@ -81,6 +81,20 @@ The other content tables use direct table entries.
 
 `trait_effects` lets custom non-prestige traits, such as modded skills, use the same trigger and action system as modded prestiges.
 
+## Enemy-Live Queue Metadata
+
+For trait, buff, and invoke entries that should only resolve while enemies still live, set:
+
+- `requires_enemies_alive: true`
+
+This flag is checked again when queued actions resolve.
+
+Use it for content described as working only `if enemies live`.
+
+New content should set this explicitly.
+
+The loader still backfills the same metadata for older legacy text-based content that already says `if enemies live`.
+
 ## Asset Paths
 
 The loader supports mod-local art referenced through `res://mods/<mod_id>/...`.

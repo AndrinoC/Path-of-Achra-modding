@@ -1,5 +1,11 @@
 # Changelog
 
+## v2026.04.14.1
+
+- explicitly stamp `requires_enemies_alive: true` into affected base traits, buffs, and invokes instead of relying only on legacy text inference
+- document `requires_enemies_alive` for new content while keeping compatibility backfill for older mods that still say `if enemies live`
+- keep release documentation aligned with the current shipped `PathofAchra.pck`
+
 ## v2026.04.14
 
 - add a built-in `Toggle Item comparison` feature to the Mods tab and move inventory item comparison into a dedicated two-column preview panel

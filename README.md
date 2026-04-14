@@ -35,6 +35,7 @@ It also includes a few safe base-pack fixes that do not intentionally change gam
 - long chained turns now inspect queued effects one-by-one instead of repeatedly rescanning the full effect queue before every pop
 - summon-flood scenarios now avoid repeated summon UI rebuilds and use lighter active-unit, AI, and open-tile lookup paths
 - queued actions described as working only `if enemies live` now get rechecked at queue resolution time so enemy-dependent effects do not keep firing after the last enemy dies
+- affected base traits, buffs, and prayers now explicitly set `requires_enemies_alive: true`, while the loader still backfills the same metadata for older legacy text-based content
 
 Core content, loot rules, enemy pools, and mod schema behavior are meant to stay the same.
 
@@ -286,6 +287,22 @@ Set `enabled_by_default` to `false` if you want a template or example mod to sta
 ```
 
 The full unlock, trigger, condition, action, metric, and reference system is documented in `ModSchema.md`.
+
+## Enemy-Live Queue Metadata
+
+If a trait, buff, or invoke should stop resolving once the last enemy dies, set:
+
+```json
+"requires_enemies_alive": true
+```
+
+This is checked at queue resolution time.
+
+Use it for entries described as working only `if enemies live`.
+
+The shipped base tables now set this explicitly for known enemy-live-gated entries.
+
+The loader still backfills the same metadata for older legacy content whose text already says `if enemies live`, but new content should set the field directly.
 
 ## Icons
 
