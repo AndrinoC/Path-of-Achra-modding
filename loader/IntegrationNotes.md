@@ -140,6 +140,10 @@ These are the files changed in the tested setup:
   - resolve queued `Tame` attempts through the normal action effect pipeline
   - expose single-action queue inspection so long effect chains avoid repeated full queue rescans
   - recheck queued effects marked with `requires_enemies_alive` at resolution time so enemy-dependent actions do not keep firing after the last enemy dies
+- `ToolLevelUp.gd`
+  - make `Vigor` level-up heal and harmful-effect cleanup resolve immediately when the level-up screen is pausing the queue
+- `Scenes/UI_Level_Up.gd`
+  - route the manual `Vigor` button through the same full-heal path used by the standard revive/level-up flow
 - `ToolMagicMaker.gd`
   - mark terrain-changing and buff-duration-changing effect paths dirty for partial room refreshes
 - `ToolAI.gd`

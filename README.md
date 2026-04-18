@@ -36,6 +36,7 @@ It also includes a few safe base-pack fixes that do not intentionally change gam
 - summon-flood scenarios now avoid repeated summon UI rebuilds and use lighter active-unit, AI, and open-tile lookup paths
 - queued actions described as working only `if enemies live` now get rechecked at queue resolution time so enemy-dependent effects do not keep firing after the last enemy dies
 - affected base traits, buffs, and prayers now explicitly set `requires_enemies_alive: true`, while the loader still backfills the same metadata for older legacy text-based content
+- manual and auto `Vigor` level-ups now both restore the player to full life even if the last enemy already died
 
 Core content, loot rules, enemy pools, and mod schema behavior are meant to stay the same.
 

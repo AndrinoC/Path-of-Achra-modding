@@ -1,5 +1,11 @@
 # Changelog
 
+## v2026.04.14.2
+
+- make manual and auto `Vigor` level-ups both restore the player to full life even after combat already ended
+- resolve manual level-up `Vigor!` cleanup immediately while the level-up screen has the queue paused, so healing no longer depends on enemy state or later queue timing
+- keep release documentation aligned with the current shipped `PathofAchra.pck`
+
 ## v2026.04.14.1
 
 - explicitly stamp `requires_enemies_alive: true` into affected base traits, buffs, and invokes instead of relying only on legacy text inference
